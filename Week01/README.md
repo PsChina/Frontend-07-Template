@@ -2,7 +2,7 @@
 
 # css 知识
 
-1. `display:inline-block` 的元素在同一行显示存在无法对其的情况需要用 `vertical-align:middle` 来使其对其。
+1. `display:inline-block` 的元素在同一行显示存在无法对齐的情况需要用 `vertical-align:middle` 来使其对齐。
 1. `text-align:center` 用于行内元素或者行内块元素的水平剧中。
 1. `line-height` 等于 `height` 用于行内元素或者行内块元素的垂直剧中。
 
