@@ -48,7 +48,6 @@
     }
     function computerMove() {
         const { point, result } = bestChoice(pattern, color)
-        console.log()
         if (point) {
             pattern[point[1] * 3 + point[0]] = color
         }

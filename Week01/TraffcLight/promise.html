@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .light-item {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 50px;
+            background-color: gray;
+        }
+
+        .green.light {
+            background-color: green;
+        }
+
+        .yellow.light {
+            background-color: yellow;
+        }
+
+        .red.light {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="green light-item"></div>
+    <div class="yellow light-item"></div>
+    <div class="red light-item"></div>
+</body>
+
+<script>
+    function getColor(color) {
+        return function () {
+            const lights = document.querySelectorAll('.light-item')
+            for (const light of lights) {
+                light.classList.remove('light')
+            }
+            document.querySelector(`.${color}`).classList.add('light')
+        }
+    }
+    const green = getColor('green'),
+        yellow = getColor('yellow'),
+        red = getColor('red')
+    function sleep(t) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, t);
+        })
+    }
+
+    function go() {
+        green()
+        sleep(1000).then(() => {
+            yellow()
+            return sleep(200)
+        }).then(() => {
+            red()
+            return sleep(500)
+        }).then(go)
+    }
+
+    go()
+</script>
+
+</html>

@@ -21,4 +21,7 @@
     >   1. 如果对象中存在循环引用的情况也无法正确实现深拷贝。
 
 1. `Object.create(obj)` 新建的对象会以 `obj` 为原型不仅会继承 `obj` 上的方法还能继承它的属性，如果对象没有嵌套可以用它来代替 `JSON.parse(JSON.stringify())` 。
-1. `labelName:for(;;)` 和 `break labelName` 配合可以结束指定的循环。  
+1. `labelName:for(;;)` 和 `break labelName` 配合可以结束指定的循环。
+1. `Promise` 出现之前 `callBack` 是解决异步编程的主要方法。 但是 `callBack` 的使用伴随着回调函数地狱的问题, `Promsie` 允许我们用链式调用的方式进行异步编程可以很好的解决回调函数地狱问题
+1. `async/awite` 是 `generator` 函数的语法糖，允许我们用同步代码进行异步编程。
+1. `async/awite` 配合 `generator` 与 `for awite()` 可以生成异步迭代器。
