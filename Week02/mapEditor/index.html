@@ -1,0 +1,65 @@
+<style>
+    .cell {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        vertical-align: top;
+        line-height: 7px;
+        background: grey;
+    }
+
+    #container {
+        user-select: none;
+    }
+</style>
+<div>
+    <div id="container">
+
+    </div>
+    <button onclick="localStorage['map'] = JSON.stringify(map) ">save</button>
+    <button onclick="map.fill(0);render()">clear</button>
+</div>
+
+<script>
+    const map = localStorage["map"] ? JSON.parse(localStorage['map']) : Array(10000).fill(0)
+    const container = document.getElementById('container')
+    let clear = false, mousedown = false
+    function render() {
+        container.innerHTML = ''
+        for (let y = 0; y < 100; y++) {
+            for (let x = 0; x < 100; x++) {
+                const cell = document.createElement('div')
+                cell.classList.add('cell')
+                if (map[100 * y + x] === 1)
+                    cell.style.backgroundColor = 'black'
+                container.appendChild(cell)
+                cell.addEventListener('mousemove', (event) => {
+                    if (mousedown) {
+                        if (clear) {
+                            event.target.style.backgroundColor = ''
+                            map[100 * y + x] = 0
+                        } else {
+                            event.target.style.backgroundColor = 'black'
+                            map[100 * y + x] = 1
+                        }
+
+                    }
+
+                })
+            }
+            const br = document.createElement('br')
+            container.appendChild(br)
+        }
+    }
+
+    container.addEventListener('mousedown', (event) => {
+        mousedown = true
+        clear = event.which === 3
+        console.log(clear, event)
+    })
+    container.addEventListener('mouseup', () => mousedown = false)
+    container.addEventListener('contextmenu', event => event.preventDefault())
+    render()
+</script>
