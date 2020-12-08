@@ -1,0 +1,96 @@
+<style>
+    .cell {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        vertical-align: top;
+        line-height: 7px;
+        background: grey;
+    }
+
+    #container {
+        user-select: none;
+        width: 701px;
+    }
+</style>
+<div>
+    <div id="container"></div>
+    <button onclick="localStorage['map'] = JSON.stringify(map) ">save</button>
+    <button onclick="map.fill(0);render()">clear</button>
+</div>
+
+<script>
+    const map = localStorage["map"] ? JSON.parse(localStorage['map']) : Array(10000).fill(0)
+    const container = document.getElementById('container')
+    let clear = false, mousedown = false
+    function render() {
+        container.innerHTML = ''
+        for (let y = 0; y < 100; y++) {
+            for (let x = 0; x < 100; x++) {
+                const cell = document.createElement('div')
+                cell.classList.add('cell')
+                if (map[100 * y + x] === 1)
+                    cell.style.backgroundColor = 'black'
+                container.appendChild(cell)
+                cell.addEventListener('mousemove', (event) => {
+                    if (mousedown) {
+                        if (clear) {
+                            event.target.style.backgroundColor = ''
+                            map[100 * y + x] = 0
+                        } else {
+                            event.target.style.backgroundColor = 'black'
+                            map[100 * y + x] = 1
+                        }
+
+                    }
+
+                })
+            }
+        }
+    }
+
+    container.addEventListener('mousedown', (event) => {
+        mousedown = true
+        clear = event.which === 3
+        console.log(clear, event)
+    })
+    container.addEventListener('mouseup', () => mousedown = false)
+    container.addEventListener('contextmenu', event => event.preventDefault())
+    render()
+    async function sleep(t) {
+        return new Promise((reslove) => {
+            setTimeout(reslove, t);
+        })
+    }
+    async function insert(queue, pattern, x, y) {
+        if (x < 0 || x >= 100 || y < 0 || y >= 100) {
+            return
+        }
+        if (pattern[100 * y + x]) {
+            return
+        }
+        container.children[100 * y + x].style.backgroundColor = 'green'
+        pattern[100 * y + x] = 2
+        await sleep(30)
+        queue.push([x, y])
+    }
+    async function path(start, end) {
+        container.children[100 * start[1] + start[0]].style.backgroundColor = 'yellow'
+        container.children[100 * end[1] + end[0]].style.backgroundColor = 'red'
+        const queue = [start]
+        map[100 * start[1] + start[0]] = 2
+        // map[100 * end[1] + end[0]] = 2
+        while (queue.length) {
+            const [x, y] = queue.shift()
+            if (x === end[0] && y === end[1]) {
+                return true
+            }
+            await insert(queue, map, x, y - 1)
+            await insert(queue, map, x + 1, y)
+            await insert(queue, map, x, y + 1)
+            await insert(queue, map, x - 1, y)
+        }
+    }
+</script>
