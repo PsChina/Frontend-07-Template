@@ -12,12 +12,11 @@
 
     #container {
         user-select: none;
+        width: 701px;
     }
 </style>
 <div>
-    <div id="container">
-
-    </div>
+    <div id="container"></div>
     <button onclick="localStorage['map'] = JSON.stringify(map) ">save</button>
     <button onclick="map.fill(0);render()">clear</button>
 </div>
@@ -49,8 +48,6 @@
 
                 })
             }
-            const br = document.createElement('br')
-            container.appendChild(br)
         }
     }
 
