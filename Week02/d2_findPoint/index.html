@@ -73,7 +73,7 @@
         }
         container.children[100 * y + x].style.backgroundColor = 'green'
         pattern[100 * y + x] = pre
-        // await sleep(0)
+        await sleep(0)
         queue.push([x, y])
     }
     async function path(start, end) {

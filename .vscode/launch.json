@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "/Users/panshanshan/Desktop/Learn/Frontend-07-Template/Week02/findPoint/index.html"
+            "file": "/Users/panshanshan/Desktop/Learn/Frontend-07-Template/Week02/d5_A*/index.html"
         }
     ]
 }

@@ -23,7 +23,12 @@ class BinaryHeap {
             return
         }
         let leftChild = 2 * index + 1, rightChild = 2 * index + 2
-        if (rightChild < this.length && leftChild < this.length && this.compare(this.data[index], this.data[leftChild]) > 0 && this.compare(this.data[index], this.data[rightChild]) > 0) {
+        if (
+            rightChild < this.length &&
+            leftChild < this.length &&
+            this.compare(this.data[index], this.data[leftChild]) > 0 &&
+            this.compare(this.data[index], this.data[rightChild]) > 0
+        ) {
             let exChild
             if (this.compare(this.data[leftChild], this.data[rightChild]) > 0) {
                 exChild = rightChild
@@ -32,10 +37,14 @@ class BinaryHeap {
             }
             this.exChange(index, exChild)
             this.sink(exChild)
-        } else if (leftChild < this.length && this.compare(this.data[index], this.data[leftChild]) > 0) {
+        } else if (leftChild < this.length &&
+            this.compare(this.data[index], this.data[leftChild]) > 0
+        ) {
             this.exChange(index, leftChild)
             this.sink(leftChild)
-        } else if (rightChild < this.length && this.compare(this.data[index], this.data[rightChild]) > 0) {
+        } else if (rightChild < this.length &&
+            this.compare(this.data[index], this.data[rightChild]) > 0
+        ) {
             this.exChange(index, rightChild)
             this.sink(rightChild)
         }
