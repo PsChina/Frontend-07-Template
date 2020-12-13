@@ -1,0 +1,191 @@
+<style>
+    .cell {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        vertical-align: top;
+        line-height: 7px;
+        background: grey;
+    }
+
+    #container {
+        user-select: none;
+        width: 701px;
+    }
+</style>
+<div>
+    <div id="container"></div>
+    <button onclick="localStorage['map'] = JSON.stringify(map) ">save</button>
+    <button onclick="map.fill(0);render()">clear</button>
+</div>
+<script>
+    class BinaryHeap { // 最小堆
+        static defaultData = []
+        static defaultCompare = ((a, b) => a - b)
+        constructor(data = BinaryHeap.defaultData, compare = BinaryHeap.defaultCompare) {
+            this.data = data
+            this.compare = compare
+            this.init()
+        }
+        init() {
+            this.data.sort(this.compare)
+        }
+        take() {
+            if (this.length === 1) {
+                return this.data.pop()
+            }
+            const value = this.data[0]
+            this.data[0] = this.data.pop()
+            this.sink()
+            return value
+        }
+        sink(index = 0) {
+            if (index >= this.length) {
+                return
+            }
+            let leftChild = 2 * index + 1, rightChild = 2 * index + 2
+            if (rightChild < this.length && leftChild < this.length && this.compare(this.data[index], this.data[leftChild]) > 0 && this.compare(this.data[index], this.data[rightChild]) > 0) {
+                let exChild
+                if (this.compare(this.data[leftChild], this.data[rightChild]) > 0) {
+                    exChild = rightChild
+                } else {
+                    exChild = leftChild
+                }
+                this.exChange(index, exChild)
+                this.sink(exChild)
+            } else if (leftChild < this.length && this.compare(this.data[index], this.data[leftChild]) > 0) {
+                this.exChange(index, leftChild)
+                this.sink(leftChild)
+            } else if (rightChild < this.length && this.compare(this.data[index], this.data[rightChild]) > 0) {
+                this.exChange(index, rightChild)
+                this.sink(rightChild)
+            }
+        }
+        rise(index = this.length - 1) {
+            if (index === 0) {
+                return
+            }
+            let parent = index % 2 === 0 ? index / 2 : (index - 1) / 2
+            if (this.compare(this.data[parent], this.data[index]) > 0) {
+                this.exChange(parent, index)
+                this.rise(parent)
+            }
+        }
+        exChange(indexA, indexB) {
+            const temp = this.data[indexA]
+            this.data[indexA] = this.data[indexB]
+            this.data[indexB] = temp
+        }
+        give(v) {
+            this.data.push(v)
+            this.rise()
+        }
+        get length() {
+            return this.data.length
+        }
+    }
+</script>
+<script>
+    const map = localStorage["map"] ? JSON.parse(localStorage['map']) : Array(10000).fill(0)
+    const container = document.getElementById('container')
+    let clear = false, mousedown = false
+    function render() {
+        container.innerHTML = ''
+        for (let y = 0; y < 100; y++) {
+            for (let x = 0; x < 100; x++) {
+                const cell = document.createElement('div')
+                cell.classList.add('cell')
+                if (map[100 * y + x] === 1)
+                    cell.style.backgroundColor = 'black'
+                container.appendChild(cell)
+                cell.addEventListener('mousemove', (event) => {
+                    if (mousedown) {
+                        if (clear) {
+                            event.target.style.backgroundColor = ''
+                            map[100 * y + x] = 0
+                        } else {
+                            event.target.style.backgroundColor = 'black'
+                            map[100 * y + x] = 1
+                        }
+
+                    }
+
+                })
+            }
+        }
+    }
+
+    container.addEventListener('mousedown', (event) => {
+        mousedown = true
+        clear = event.which === 3
+        console.log(clear, event)
+    })
+    container.addEventListener('mouseup', () => mousedown = false)
+    container.addEventListener('contextmenu', event => event.preventDefault())
+    render()
+    async function sleep(t) {
+        return new Promise((reslove) => {
+            setTimeout(reslove, t);
+        })
+    }
+    let distanceToThenStart = () => null
+    function compare(a, b) {
+        return distanceToThenStart(a) - distanceToThenStart(b)
+    }
+    async function insert(queue, pattern, x, y, pre) {
+        if (x < 0 || x >= 100 || y < 0 || y >= 100) {
+            return
+        }
+        const point = pattern[100 * y + x]
+        if (point) {
+            if (point === 1) {
+                return
+            }
+            if (compare(point, pre) < 0) {
+                container.children[100 * y + x].style.backgroundColor = 'red'
+                pattern[100 * pre[1] + pre[0]] = [x, y]
+                queue.give([x, y])
+            }
+            return
+        }
+        container.children[100 * y + x].style.backgroundColor = 'green'
+        pattern[100 * y + x] = pre
+        await sleep(0)
+        queue.give([x, y])
+    }
+    async function path(start, end) {
+        let table = Object.create(map)
+        container.children[100 * start[1] + start[0]].style.backgroundColor = 'yellow'
+        container.children[100 * end[1] + end[0]].style.backgroundColor = 'red'
+        function distanceToTheEnd(point) {
+            return (point[0] - end[0]) ** 2 + (point[1] - end[1]) ** 2
+        }
+        distanceToThenStart = (point) => {
+            return (point[0] - start[0]) ** 2 + (point[1] - start[1]) ** 2
+        }
+        const queue = new BinaryHeap([start], (a, b) => distanceToTheEnd(a) - distanceToTheEnd(b))
+        map[100 * start[1] + start[0]] = 1
+        // map[100 * end[1] + end[0]] = 2
+        while (queue.length) {
+            let [x, y] = queue.take()
+            if (x === end[0] && y === end[1]) {
+                let path = []
+                while (x !== start[0] || y !== start[1]) {
+                    container.children[100 * y + x].style.backgroundColor = 'purple'
+                    path.push(map[y * 100 + x])
+                    const perPoint = table[y * 100 + x]
+                    x = perPoint[0]
+                    y = perPoint[1]
+                    await sleep(30)
+                }
+                return path
+            }
+            await insert(queue, table, x, y - 1, [x, y])
+            await insert(queue, table, x + 1, y, [x, y])
+            await insert(queue, table, x, y + 1, [x, y])
+            await insert(queue, table, x - 1, y, [x, y])
+        }
+    }
+</script>
