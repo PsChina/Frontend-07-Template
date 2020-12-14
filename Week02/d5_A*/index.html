@@ -119,8 +119,7 @@
 
     container.addEventListener('mousedown', (event) => {
         mousedown = true
-        clear = event.which === 3
-        console.log(clear, event)
+        clear = event.which === 3 || Boolean(event.altKey)
     })
     container.addEventListener('mouseup', () => mousedown = false)
     container.addEventListener('contextmenu', event => event.preventDefault())
@@ -151,8 +150,8 @@
             let distanceToTheStart = 0
             let [x, y] = point
             while (x !== start[0] || y !== start[1]) {
+                distanceToTheStart++
                 const perPoint = table[y * 100 + x]
-                distanceToTheStart += (Math.abs(x - perPoint[0]) + Math.abs(y - perPoint[1]))
                 x = perPoint[0]
                 y = perPoint[1]
             }
