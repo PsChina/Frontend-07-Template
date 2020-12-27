@@ -50,4 +50,4 @@ function wildCard(source, pattern) {
     return true
 }
 
-console.log(wildCard('hello', 'h'))
+console.log(wildCard('hello', 'h*le*o'))
