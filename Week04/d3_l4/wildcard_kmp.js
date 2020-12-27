@@ -30,7 +30,7 @@ function wildCard(source, pattern) {
             subPattrn += pattern[i]
             i++
         }
-        const res = kmp(source.substr(lastIndex), subPattrn)
+        const res = kmp(source, subPattrn, lastIndex)
         if (res) {
             lastIndex += res[1] - res[0]
         } else {
@@ -47,7 +47,7 @@ function wildCard(source, pattern) {
     return true
 }
 
-function kmp(source, pattern) {
+function kmp(source, pattern, start = 0, end = source.length) {
     const { length } = pattern
     const table = Array(length).fill(0)
     {
@@ -66,8 +66,8 @@ function kmp(source, pattern) {
         }
     }
     {
-        let i = 0, j = 0
-        const { length } = source
+        let i = start, j = 0
+        const length = end
         while (i < length) {
             if (source[i] === pattern[j] || pattern[j] === '?') {
                 i++, j++
