@@ -32,7 +32,7 @@ function wildCard(source, pattern) {
         }
         const res = kmp(source, subPattrn, lastIndex)
         if (res) {
-            lastIndex = res[1]
+            lastIndex = res.lastIndex
         } else {
             return false
         }
@@ -79,12 +79,13 @@ function kmp(source, pattern, start = 0, end = source.length) {
                 }
             }
             if (j === pattern.length) {
-                return [i - j, i - 1]
+                const res = [i - j, i - 1]
+                res.lastIndex = i - 1 - table[table.length - 1]
+                return res
             }
         }
         return false
     }
 }
-
 
 console.log(wildCard('helloaabbcc', 'h*o?a*c*'))

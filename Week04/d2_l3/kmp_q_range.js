@@ -30,7 +30,9 @@ function kmp(source, pattern, start = 0, end = source.length) {
                 }
             }
             if (j === pattern.length) {
-                return [i - j, i - 1]
+                const res = [i - j, i - 1]
+                res.lastIndex = i - 1 - table[table.length - 1]
+                return res
             }
         }
         return false
