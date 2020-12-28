@@ -32,7 +32,7 @@ function wildCard(source, pattern) {
         }
         const res = kmp(source, subPattrn, lastIndex)
         if (res) {
-            lastIndex += res[1] - res[0]
+            lastIndex = res[1]
         } else {
             return false
         }
