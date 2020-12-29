@@ -1,0 +1,17 @@
+<script>
+    var object = {
+        a: 1,
+        b: 2
+    }
+
+    var op = new Proxy(object, {
+        set(object, prop, val) {
+            object[prop] = val
+            return object[prop]
+        },
+        get(object, prop) {
+            return object[prop]
+        }
+    })
+
+</script>
