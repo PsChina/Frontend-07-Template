@@ -1,0 +1,38 @@
+<script>
+    var object = {
+        a: 1,
+        b: 2
+    }
+
+    var callbacks = []
+
+    function effect(callback) {
+        callbacks.push(callback)
+    }
+
+    function reactivity(object) {
+        return new Proxy(object, {
+            set(object, prop, val) {
+                object[prop] = val
+                for (let callback of callbacks) {
+                    callback()
+                }
+                return object[prop]
+            },
+            get(object, prop) {
+                return object[prop]
+            }
+        })
+    }
+
+    const op = reactivity(object)
+
+
+    effect(() => {
+        console.log('effect', object.a)
+    })
+
+    op.a = 10
+
+
+</script>
