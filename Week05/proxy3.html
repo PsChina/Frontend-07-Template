@@ -1,0 +1,56 @@
+<script>
+    var object = {
+        a: 1,
+        b: 2
+    }
+
+    var callbacks = new Map()
+
+    var usedReactivities = []
+
+    function effect(callback) {
+        usedReactivities = []
+        callback()
+        console.log(usedReactivities)
+        for (let reactivity of usedReactivities) {
+            if (!callbacks.has(reactivity[0])) {
+                callbacks.set(reactivity[0], new Map())
+            }
+            if (!callbacks.get(reactivity[0]).get(reactivity[1])) {
+                callbacks.get(reactivity[0]).set(reactivity[1], [])
+            }
+            callbacks.get(reactivity[0]).get(reactivity[1]).push(callback)
+        }
+    }
+
+    function reactivity(object) {
+        return new Proxy(object, {
+            set(object, prop, val) {
+                object[prop] = val
+                if (callbacks.has(object)) {
+                    if (callbacks.get(object).has(prop)) {
+                        for (const callback of callbacks.get(object).get(prop)) {
+                            callback()
+                        }
+                    }
+                }
+                return object[prop]
+            },
+            get(object, prop) {
+                usedReactivities.push([object, prop])
+                return object[prop]
+            }
+        })
+    }
+
+    const ob = reactivity(object)
+
+
+    effect(() => {
+        ob.a
+    })
+
+    ob.a = 10
+
+
+</script>
