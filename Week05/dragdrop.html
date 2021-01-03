@@ -2,17 +2,21 @@
 
 <script>
     let dragable = document.getElementById('dragable')
-    let origin = []
+    let origin = [0, 0], baseX = 0, baseY = 0, offsetX = 0, offsetY = 0
     function move(event) {
-        dragable.style.transform = `translate(${event.clientX - origin[0]}px,${event.clientY - origin[1]}px)`
+        offsetX = event.clientX - origin[0]
+        offsetY = event.clientY - origin[1]
+        dragable.style.transform = `translate(${baseX + offsetX}px,${baseY + offsetY}px)`
     }
     function up() {
+        baseX += offsetX
+        baseY += offsetY
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
     }
     dragable.addEventListener('mousedown', (event) => {
-        origin[0] = event.offsetX
-        origin[1] = event.offsetY
+        origin[0] = event.clientX
+        origin[1] = event.clientY
         document.addEventListener('mousemove', move)
         document.addEventListener('mouseup', up)
     })
