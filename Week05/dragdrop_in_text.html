@@ -1,0 +1,63 @@
+<div id="container" style="user-select:none;">
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+</div>
+
+<div id="dragable" style="display:inline-block;width:100px;height:100px;background-color:pink;"></div>
+
+<script>
+    let dragable = document.getElementById('dragable')
+
+    function move(event) {
+        const range = getNearest(event.clientX, event.clientY)
+        range.insertNode(dragable)
+    }
+    function up() {
+
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+    }
+    dragable.addEventListener('mousedown', (event) => {
+
+        document.addEventListener('mousemove', move)
+        document.addEventListener('mouseup', up)
+    })
+
+    const container = document.getElementById('container'),
+        childNode = container.childNodes[0],
+        length = childNode.textContent.length,
+        ranges = []
+
+    for (let i = 0; i < length; i++) {
+        let range = document.createRange()
+        range.setStart(childNode, i)
+        range.setEnd(childNode, i)
+        ranges.push(range)
+    }
+
+    function getNearest(x, y) {
+        let min = Infinity,
+            nearest = null
+        for (const range of ranges) {
+            const rect = range.getBoundingClientRect(),
+                distance = (rect.x - x) ** 2 + (rect.y - y) ** 2
+            if (distance < min) {
+                nearest = range
+                min = distance
+            }
+        }
+        return nearest
+    }
+</script>
