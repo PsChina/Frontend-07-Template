@@ -1,0 +1,19 @@
+<div id="dragable" style="width:100px;height:100px;background-color:pink;"></div>
+
+<script>
+    let dragable = document.getElementById('dragable')
+    let origin = []
+    function move(event) {
+        dragable.style.transform = `translate(${event.clientX - origin[0]}px,${event.clientY - origin[1]}px)`
+    }
+    function up() {
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+    }
+    dragable.addEventListener('mousedown', (event) => {
+        origin[0] = event.offsetX
+        origin[1] = event.offsetY
+        document.addEventListener('mousemove', move)
+        document.addEventListener('mouseup', up)
+    })
+</script>
