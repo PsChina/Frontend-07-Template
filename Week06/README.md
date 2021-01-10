@@ -303,3 +303,62 @@ function UTF8_Encoding(string){
     获取 Undefined 最保险的方式是 `void 0;`
 
 
+## 对象的基础知识
+
+任何一个对象都是唯一的，这与他本身的状态无关
+
+所以即使完全一致的对象也并不相等
+
+我们用状态描述对象
+
+我们状态的改变是行为
+
+## 什么组成了对象
+
+1. state 状态
+1. identifier 唯一标识
+1. behavior 行为
+
+## Class
+
+我们认识不同对象的方式就是分类
+
+比如 鱼是一类 羊是一类 
+
+而鱼和羊都是动物这一类
+
+## Prototype
+
+原型是一种更加接近人类原始认知的描述对象的方法
+
+我们并不试图做严谨的分类，而是采用`相似` 这样的方式去描述对象。
+
+任何对象仅仅需要描述它自己与原型的区别即可。
+
+```
+Fish.prototype = Animal
+
+Animal.prototype = Object
+
+Object.prototype = Nihilo (null)
+```
+描述狗咬人，应该描述人的状态因为这件事发生了什么变化，而不是描述狗对人做了什么。因为这件事对狗状态的影响不大。
+```js
+class Dog{
+  bite(){
+    return 'bite'
+  }
+}
+
+class Person{
+  name = ''
+  constructor(name){
+    this.name = name
+  }
+  hurt(damage){
+    console.log(`受到到伤害${damage}`);
+  }
+}
+
+new Person('张三').hurt(new Dog().bite()) 
+```
