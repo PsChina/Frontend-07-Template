@@ -362,3 +362,61 @@ class Person{
 
 new Person('张三').hurt(new Dog().bite()) 
 ```
+
+## JS中的对象
+
+Object
+
+`Property` 属性
+`Property` 属性
+`Property` 属性
+
+`[[Property]]` 原生对象
+
+
+在 JavaScript运行时，原生对象描述的方式十分简单，我们只需要关系原型和属性两个部分。
+
+当我们去寻在一个对象的属性的时候不存在，那么会它原型上去找，如果没找到，则会继续向上查找直到null
+
+### Data Property
+数据属性
+
+
+特征值:
+`[[value]]` 值
+
+`writeble` 是否可写
+
+`enumerable` 是否可枚举
+
+`configurable` 是否可配置 false 表示不可配置
+
+### Accessor Property
+访问器属性 （函数）
+
+特征值:
+`get`
+
+`set`
+
+`enumerable`
+
+`configurable`
+
+### Object API/Grammar
+
+1. {}. [] Object.defineProperty
+
+1. Object.create / Object.setPrototypeOf / Object.getPrototypeOf
+
+1. new / class / extends
+
+1. new / function / prototype
+
+### Function Object
+
+`Object[[call]]`
+
+Function Object 存在一个内置行为 call
+
+
