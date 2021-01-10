@@ -194,3 +194,23 @@ Program (组织代码层)
     Package
     Library
 
+## JS Number 类型
+
+IEEE 754 Double Float
+
+1. Sign(1) 符号位 1位
+    0表示正 1表示负
+1. Exponent(11) 指数位 11位
+   指数位存在偏移 由于存在负的指数
+   大于 10000000000（基准值） 的表述正指数 否则是负指数
+1. Frction(52) 有效数字位 52位
+   存在隐藏位 1
+
+
+Exponent * Frction 表示 Number 的值
+
+
+
+
+
+
