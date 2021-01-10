@@ -280,5 +280,26 @@ function UTF8_Encoding(string){
 包裹的字符会被当作一个整体
 
 
+## 其他类型
+
+1. Boolean 
+
+    true （关键字）
+
+    false（关键字）
+
+1. Null 
+
+    Null 表示有值但是是 Null
+
+    Null 是关键字
+
+1. Undefined
+
+    Undefined 表示从未被定义过
+
+    Undefined 不是关键字
+
+    获取 Undefined 最保险的方式是 `void 0;`
 
 
