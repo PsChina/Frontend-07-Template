@@ -124,7 +124,7 @@ EBNF AENF Customized
   C C++ JAVA Python JavaScript
 
 
-## 变成语言的性质
+## 编程语言的性质
 
 ### 图灵完美性
 
