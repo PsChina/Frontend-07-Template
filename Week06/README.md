@@ -157,6 +157,40 @@ EBNF AENF Customized
 1. 泛型（逆变协变）
 
 
+## 一般语言的设计方式
 
+5 层结构
 
+Atom （原子级） 
+
+    Identifier 标识符 （关键字 变量）
+    Literal 直接量
+    
+Expression （表达式）
+
+    Atom 原子级对象
+    Operator 操作符
+    Punctuator 标点符号
+
+Statement（语句）
+
+    Expression 表达式
+    Keyword 关键字
+    Punctuator 标点符号
+
+到这一层就能达到图灵完备了
+
+Structure （结构）
+
+    Function 函数
+    Class 类
+    Process 过程
+    Namespace 命名空间
+
+Program (组织代码层)
+
+    Program
+    Module
+    Package
+    Library
 
