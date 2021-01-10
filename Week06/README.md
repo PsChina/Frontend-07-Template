@@ -210,6 +210,74 @@ IEEE 754 Double Float
 Exponent * Frction 表示 Number 的值
 
 
+## JS String 类型
+
+1. Character 字符
+    字符集：
+        ASCII
+        Uniode
+        UCS
+        GB （GB321 GBK GB18030）
+        ISO-ISO-8859
+        BIG5
+1. Code Point 码点
+1. Encoding 编码
+        UTF-8 （UTF-8 采用 8 位表示一个字符 所以当表示中文等字符集的时候不够用需要 采用多个字节来表示 例如 11100110 1011100 10000000 第一个字节中表示将要采用几个字节表示这个字符（前四位） 有几个1就是用几个字符这里是3 后面的每个字节都会以10开头 所以有效位数为 4 + 6 + 6 === 2 个 8位）
+        UTF-16
+        
+
+
+```javascript
+function UTF8_Encoding(string){
+    const buffer = []
+    for(const char of string){
+        const code = char.codePointAt(0)
+        // 1 Byte 块的访问概率最大应该放在前面一下写法方便理解
+        if(code >= 0x00010000){ // 4 Byte
+            buffer.push(
+                code >> 18 & 0b0000111 | 0b11110000,
+                code >> 12 & 0b0011111 | 0b10000000,
+                code >> 6  & 0b0011111 | 0b10000000,
+                code       & 0b0011111 | 0b10000000
+            )
+        } else if(code >= 0x00000800){// 3 Byte
+            buffer.push(
+                code >> 12 & 0b0011111 | 0b10000000,
+                code >> 6  & 0b0011111 | 0b10000000,
+                code       & 0b0011111 | 0b10000000
+            )
+        } else if(code >= 0x00000080){// 2 Byte
+            buffer.push(
+                code >> 6  & 0b0011111 | 0b10000000,
+                code       & 0b0011111 | 0b10000000
+            )
+        } else {// 1 Byte ASCII
+            buffer.push(code)
+        }
+    }
+}
+```
+
+### 字符串的表示
+
+1. "abc" 双引号
+    不可以加 换行符和回车 可以用 \n  和 \t 来代替
+1. 'abc' 单引号
+1. \`abc\` 反引号
+
+
+字符串 语法分析
+
+反引号 在编译的时候并不是一个整体而是分开的
+
+4 种token
+
+1. \` 开头 `${` 结尾
+1. `}` 开头 `${` 结尾
+1. `}` 开头 \` 结尾
+1. \` 开头 \` 结尾
+
+包裹的字符会被当作一个整体
 
 
 
