@@ -48,13 +48,16 @@ BNF 用尖括号 阔起来的名称来表示语法结构名称
 
 举例 四则运算
 
-`<MultipcativeExpression>`::=`<Number>`|`<MultipcativeExpression>`"*"`<Number>`|
-`<MultipcativeExpression>`"/"`<Number>`|
+
+`<PrimaryExpression>`::= `<Number>` | "("`<AdditiveExpression>`")"
+
+`<MultipcativeExpression>`::= `<PrimaryExpression>`|
+                              `<MultipcativeExpression>`"*"`<Number>`|
+                              `<MultipcativeExpression>`"/"`<Number>`
+
 `<AdditiveExpression>`::=`<MultipcativeExpression>`|
-`<AdditiveExpression>`"+"`<MultipcativeExpression>`|
-`<AdditiveExpression>`"-"`<MultipcativeExpression>`
-
-
+                         `<AdditiveExpression>`"+"`<MultipcativeExpression>`|
+                         `<AdditiveExpression>`"-"`<MultipcativeExpression>`
 
     
 
