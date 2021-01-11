@@ -255,6 +255,7 @@ function UTF8_Encoding(string){
             buffer.push(code)
         }
     }
+    return buffer
 }
 ```
 
