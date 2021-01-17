@@ -174,6 +174,69 @@ Completion Record 分为三个部分
 1. value: 基本类型
 1. target : label
 
+## 简单语句和复合语句
+
+### 简单语句
+
+1. ExpressionStatement
+1. EmptyStatement
+1. DebuggerStatement
+1. ThrowStatement
+1. CountinueStatement
+1. BreakStatement
+1. returnStatement
+
+
+### 复合语句
+
+1. BlockStatement
+1. IfStatement
+1. SwitchStatement (在 C/C++ 里面推荐使用 Switch ， JS内不建议使用)
+1. IterationStatement 
+1. WithStatement (会带来不确定性 不建议使用)
+1. LabelledStatement 
+1. TryStatement (TryStatement 不是 BlockStatement finally 一定会被执行，并且括号不能被省略)
+
+BlockStatement 
+
+```js
+{
+    //
+}
+```
+
+IterationStatement
+
+```js
+while ()
+
+do {} while()
+
+for(;;){}
+
+for(in)
+
+for (of)
+
+for awite(of) 
+```
+
+TryStatement
+
+```js
+try {
+
+} catch(e){
+
+} finally {
+
+}
+```
+
+
+
+
+
 
 
 
