@@ -1,0 +1,221 @@
+<!--
+ * @Author: ailiang
+ * @Date: 2021-01-11 14:37:22
+ * @LastEditors: ailiang
+ * @LastEditTime: 2021-01-12 14:14:37
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Realm对象</title>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.1.0/build/g6.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="mountNode"></div>
+    <script>
+        //Javascript 的内置对象： 
+        //String Number Boolean Array Function Object Date Math RegExp Error
+        const data = {
+            // 点集
+            children: [{
+                deep: 1,
+                id: 'RexExp', // String，该节点存在则必须，节点的唯一标识
+                label: 'RegExp',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Number', // String，该节点存在则必须，节点的唯一标识
+                label: 'Number',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'String', // String，该节点存在则必须，节点的唯一标识
+                label: 'String',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Boolean', // String，该节点存在则必须，节点的唯一标识
+                label: 'Boolean',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Array', // String，该节点存在则必须，节点的唯一标识
+                label: 'Array',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Function', // String，该节点存在则必须，节点的唯一标识
+                label: 'Function',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Object', // String，该节点存在则必须，节点的唯一标识
+                label: 'Object',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Date', // String，该节点存在则必须，节点的唯一标识
+                label: 'Date',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Math', // String，该节点存在则必须，节点的唯一标识
+                label: 'Math',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }, {
+                deep: 1,
+                id: 'Error', // String，该节点存在则必须，节点的唯一标识
+                label: 'Error',
+                labelCfg: {
+                    position: 'left'
+                },
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+            }],
+            deep: 0,
+            id: 'Realm', // String，该节点存在则必须，节点的唯一标识
+            label: 'Realm',
+            labelCfg: {
+                position: 'left'
+            },
+            style: {
+                fill: '#40a9ff',
+                stroke: '#096dd9'
+            },
+            x: 0,
+            y: 908,
+            // 边集
+        };
+        const graph = new G6.TreeGraph({
+            container: 'mountNode', // String | HTMLElement，必须，在 Step 1 中创建的容器 id 或容器本身
+            width: 800, // Number，必须，图的宽度
+            height: 500, // Number，必须，图的高度
+            modes: {
+                default: [{
+                    type: 'collapse-expand',
+                    onChange: function onChange(item, collapsed) {
+                        var data = item.get('model').data;
+                        data.collapsed = collapsed;
+                        return true;
+                    }
+                }, 'drag-canvas', 'zoom-canvas']
+            },
+            defaultNode: {
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5]
+                ],
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                }
+            },
+            defaultEdge: {
+                shape: 'cubic-horizontal',
+                style: {
+                    stroke: '#A3B1BF'
+                }
+            },
+            layout: {
+                type: 'compactBox',
+                direction: 'LR',
+                getId: function getId(d) {
+                    return d.id;
+                },
+                getHeight: function getHeight() {
+                    return 16;
+                },
+                getWidth: function getWidth() {
+                    return 16;
+                },
+                getVGap: function getVGap() {
+                    return 10;
+                },
+                getHGap: function getHGap() {
+                    return 100;
+                }
+            },
+        });
+        graph.node(function (node) {
+            console.log(node)
+            return {
+                size: 15,
+                style: {
+                    fill: '#40a9ff',
+                    stroke: '#096dd9'
+                },
+                label: node.id,
+                labelCfg: {
+                    position: node.children && node.children.length > 0 ? 'left' : 'right'
+                }
+            };
+        });
+        graph.data(data); // 读取 Step 2 中的数据源到图上
+        graph.render();
+        graph.fitView();
+    </script>
+</body>
+
+</html>
