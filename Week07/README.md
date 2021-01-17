@@ -154,6 +154,28 @@ function NumberToString(number,system){
 }
 ```
 
+## 运行时相关概念
+
+Completion Record
+
+```js
+if(x === 1){
+    return 10
+}
+```
+js 引擎在解析 if 语句的时候需要知道它完成了之后是怎么完成的 所以需要一个 `Completion Record` 这种数据结构去储存他
+
+包括是否返回以及返回值是啥
+
+
+Completion Record 分为三个部分
+
+1. type: normal break countinue return or throw
+1. value: 基本类型
+1. target : label
+
+
+
 
 
 
