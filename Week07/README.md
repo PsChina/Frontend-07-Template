@@ -264,6 +264,37 @@ try {
 
 `{}`产生一个作用域
 
+## JS 结构化｜宏任务和微任务
+
+### JS 执行粒度
+
+1. 宏任务 （传给JS引擎的任务)
+1. 微任务（Promise）（JS引擎内部的任务）
+1. 函数调用 (Excution Context)
+1. 语句/声明 (Completion Record)
+1. 表达式 (Reference)
+1. 直接量/变量/this
+
+
+JS 引擎是一个静态库
+
+### 事件循环 Event Loop
+
+wait -> get code -> execute -> wait
+
+等待一个锁
+
+```Object-C
+while(true){
+    char source[1024];
+    printf("js:>");
+    fgets(source,1024,stdin);
+    result = [context evaluateScript:NSString stringWithUTF8Dtring:source]];
+    NSLOG(@"%@",result);
+}
+```
+
+
 
 
 
