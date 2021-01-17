@@ -88,6 +88,74 @@ Bitwise
 1. `&`、`^`、`|`
 
 
+## 类型转换
+
+![类型转换](./type_conversion.png)
+
+
+### Unboxing 拆箱转换 （将Object转换成普通类型）
+
+1. ToPermitive
+1. toString vs valueOf
+1. Symbol.toPrimitive 如果定义了 `Symbol.toPrimitive` 则会忽略 `toString` 和 `valueOf`
+
+
+`+` 法运算优先调用 `valueOf`
+
+作为属性名使用的时候会优先调用 `toString` 方法
+
+
+### Boxing 装箱转换
+
+1. Number
+1. String
+1. Boolean
+1. Symbol
+
+前三种使用 new 调用会将值装入一个 Object 对象内
+
+最后一种使用 new Object 调用会将值装入一个 Object 对象内
+
+使用 `==` 比较结果为 `true` 使用 `===` 比较结果为 `false`
+
+当使用 `Member` 去访问属性的时候如果变量是基础变量 则会自动进行装箱转换。
+
+### StringToNumber
+
+```js
+function StringToNumber(value){
+    if(typeof value !== 'string') return
+    if(value.length>=16){
+        if(BigInt(value) > BigInt(9007199254740991)){
+            return 
+        }
+        if(BigInt(value) < BigInt(-9007199254740991)){
+            return 
+        }
+    }
+   if(value.startsWith('0x')||value.startsWith('0X')){
+       return parseInt(value.substring(2),16)
+   }
+   if(value.startsWith('0o')){
+       return parseInt(value.substring(2),8)
+   }
+   if(value.startsWith('0b')){
+       return parseInt(value.substring(2),2)
+   }
+   return parseFloat(value,10)
+```
+
+### NumberToString
+
+```js
+function NumberToString(number,system){
+    if(Number.isInterger(value) && !Number.isSafeInterger(value)) return
+    return value.soString(system)
+}
+```
+
+
+
 
 
 
