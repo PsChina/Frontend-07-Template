@@ -294,6 +294,87 @@ while(true){
 }
 ```
 
+## JS结构化 ｜ JS函数调用
+
+foo.js
+```js
+function foo(){
+    console.log(i)
+}
+export foo
+```
+
+index.js
+```js
+import {foo} from 'foo.js'
+var i = 0
+console.log(i)
+foo()
+console.log(i)
+i++
+```
+
+上文 index.js `foo` 访问的 `i` 并不是 index.js 中的 `i` 而是 foo.js 中的 `i`
+
+`执行环境栈形成了作用域和作用域链`
+
+
+Excution Context 
+
+1. code evalution state
+1. Function
+1. Script or Module
+1. Generator
+1. Realm
+1. LexicalEnvironment
+1. VariableEnvironment
+
+LexicalEnvironment
+
+1. this
+1. new.target
+1. super
+1. 变量
+
+VariableEnvironment
+
+历史包袱 给 var 服务
+
+
+
+Environment Record   
+
+Environment Records
+
+1. Declarative Environment Records
+1. Global Environment Records （只有一个）
+1. Object Environment Records （给with用的）
+
+Declarative Environment Records
+
+1. Function Environment Records
+1. Module Environment Records
+
+
+### Function-Closure
+
+每一个函数都会生成一个闭包
+
+闭包:
+
+1. 代码 
+1. 环境 (Object 和 变量和序列组成)
+
+每个函数都会带一个定义时生成的 Environment Records 存在自生一个属性上
+
+### Realm
+
+在JS中，函数表达式和对象直接量均会创建对象。
+
+使用.做隐式转换也会常见对象
+
+这些对象也是有原型的，如果我们没有Realm，我们就不知道他们的原型是什么。
+
 
 
 
