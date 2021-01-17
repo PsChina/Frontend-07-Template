@@ -233,6 +233,38 @@ try {
 }
 ```
 
+## 声明
+
+1. FunctionDeclaration
+1. GeneratorDecaration
+1. AsyncFunctionDecaration
+1. AsyncGeneratorDecaration
+1. VariableStatement
+1. CalssDecaration
+1. LexicalDeclaration
+
+### 只认fucntion body 的声明
+（变量声明提升和函数声明提升）
+1. function
+1. function *
+1. async function
+1. async function *
+1. var
+
+### 当在声明前使用时会报错的声明
+(存在暂存性死区)
+1. calss
+1. const
+1. let 
+
+
+### 作用域
+
+新标准：
+
+`{}`产生一个作用域
+
+
 
 
 
