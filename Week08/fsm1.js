@@ -63,6 +63,6 @@ let res = match('ab abcdeef')
 
 console.log(res)
 
-res = match('ab abcdef')
+res = match('abbb aaaabcdeabcdef')
 
 console.log(res)
