@@ -498,6 +498,29 @@ HTTP 请求总结
 1. body 是 kv 格式
 1. 不同的 content-type 影响 body 的格式
 
+## HTTP请求 ｜ send 函数的编写了解 response 格式
+
+send 函数总结
+
+1. 在Request的构造函数中收集必要的信息
+1. 设计一个 send 函数，把请求真实发送到服务器。
+1. send 函数是异步的所以返回一个Promise
+
+```
+
+```
+
+HTTP 协议 response 部分组成
+
+HTTP/1.1 200 OK (state line)
+Content-Type:text/html (headers)
+Date:Mon,23 Dec 2019 06:46:19 MGT (headers)
+connection:keep-alive (headers)
+Transfer-Encoding:chunked (headers)
+
+26
+`<html><body>Hello World</body></html>`
+0
 
 
 

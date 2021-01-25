@@ -88,27 +88,27 @@ function end() {
 // }
 
 
-// function getPaser(c) {
+// function getParser(c) {
 //     if (c.length > 1) {
-//         return char(c[0], getPaser(c.slice(1)))
+//         return char(c[0], getParser(c.slice(1)))
 //     } else {
 //         return char(c, ok)
 //     }
 // }
 
-// const helloPaser = getPaser('hello')
+// const helloParser = getParser('hello')
 
 
-// console.log(helloPaser('hello 11'))
-// console.log(helloPaser('hell'))
+// console.log(helloParser('hello 11'))
+// console.log(helloParser('hell'))
 
 
-// const PsPaser = getPaser('Ps')
+// const PsParser = getParser('Ps')
 
-// console.log(PsPaser('hello'))
-// console.log(PsPaser('ps'))
-// console.log(PsPaser('Ps'))
-// console.log(PsPaser('Ps ss'))
+// console.log(PsParser('hello'))
+// console.log(PsParser('ps'))
+// console.log(PsParser('Ps'))
+// console.log(PsParser('Ps ss'))
 
 
 console.log(match('abcabcabx'))
