@@ -433,7 +433,9 @@ HTTP 协议是一个文本行协议，与二进制协议不同的是文本形的
 HTTP 协议 request 部分组成
 
 POST /HTTP/1.1 （Request line）
+
 Host:127.0.0.1 （Headers）
+
 Content-Type:application/x-www-form-uilenconded （Headers）
 
 field1=aaa&code=x%3D1 （Body, 格式由Content-Type 决定）
@@ -513,9 +515,13 @@ send 函数总结
 HTTP 协议 response 部分组成
 
 HTTP/1.1 200 OK (state line)
+
 Content-Type:text/html (headers)
+
 Date:Mon,23 Dec 2019 06:46:19 MGT (headers)
+
 connection:keep-alive (headers)
+
 Transfer-Encoding:chunked (headers)
 
 26
