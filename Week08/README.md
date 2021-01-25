@@ -404,5 +404,46 @@ libnet/libpcap：
 HTTP 是由一个 `Request` 和 一个 `Response` 组成的，对于TCP这种全双工通信协议，HTTP显得特别有意思，它只能由客户端发送一个 `Request` 和服务端返回一个 `Response` 来完成一次通信，所以每一个 `Request` 它一定对应着一个 `Response`， 如果 `Response` 多了或者是 `Request` 多了，那都说明协议出错。虽然他做了更加严格的规定但是在在实践中发现这种模式还不错，所以 `HTTP` 成为了互联网上最流行的传输协议。
 
 
+## HTTP请求 ｜ 服务端环境准备
+
+```js
+const http = require('http')
+
+http.createServer((request, response) => {
+    let body = [];
+    request.on('error', (err) => {
+        console.log(err);
+    }).on('data', (chunk) => {
+        body.push(chunk.toString())
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        console.log('body:', body);
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        })
+        response.end('Hello world\n')
+    })
+}).listen(8080)
+
+console.log('server started')
+```
+
+HTTP 协议是一个文本行协议，与二进制协议不同的是文本形的协议所有的内容都是字符串它的每一个字节都会被理解成字符串的一部分，比如说要传输一个1不会把这个1变成一个1的比特传过去，也不会把它放到一个字节里面传过去。而是会用一个字符1（Unicode 或者 ASCII 编码）
+
+HTTP 协议 request 部分组成
+
+POST /HTTP/1.1 （Request line）
+Host:127.0.0.1 （Headers）
+Content-Type:application/x-www-form-uilenconded （Headers）
+
+field1=aaa&code=x%3D1 （Body, 格式由Content-Type 决定）
+
+HTTP协议里面所有的换行都是由两个字符组成 `\r\n`
+
+
+
+
+
+
 
 
