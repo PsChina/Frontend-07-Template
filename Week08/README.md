@@ -709,3 +709,8 @@ ResponseParser 总结
 1. ResponseParser 分段处理 ResponseText， 我们使用状态机来分析文本结构
 
 
+## HTTP请求 ｜ response body的解析
+
+```js
+
+```
