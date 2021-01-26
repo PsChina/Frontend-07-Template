@@ -34,11 +34,38 @@ class Request {
 
         this.headers['Content-Length'] = this.bodyText.length
     }
-    send() {
+    send(connection) {
         return new Promise((resolve, reject) => {
             const parser = new ResponseParser
-            resolve('')
+            if (connection) {
+                connection.write(this.toString())
+            } else {
+                connection = net.createConnection({
+                    host: this.host,
+                    port: this.port
+                }, () => {
+                    connection.write(this.toString())
+                })
+            }
+            connection.on('data', (data) => {
+                console.log(data.toString())
+                parser.receive(data.toString())
+                if (parser.isFinished) {
+                    resolve(parser.response)
+                    connection.end()
+                }
+            })
+            connection.on('error', (err) => {
+                reject(err)
+                connection.end()
+            })
         })
+    }
+    toString() {
+        return `${this.method} ${this.path} HTTP/1.1\r
+${Object.keys(this.headers).map((key) => `${key}: ${this.headers[key]}`).join('\r\n')}\r
+\r
+${this.bodyText}`
     }
 }
 
@@ -46,7 +73,7 @@ void async function () {
     let request = new Request({
         method: 'POST', // HTTP 协议要求
         host: '127.0.0.1',// TCP 协议的要求
-        port: '8888', // TCP 协议的要求
+        port: '8088', // TCP 协议的要求
         path: '/', // HTTP 协议要求
         headers: { // HTTP 协议要求
             ['X-Foo2']: 'customed'
@@ -57,5 +84,5 @@ void async function () {
     })
     let response = await request.send()
 
-    console.log(request)
+    console.log(response)
 }();
