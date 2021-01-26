@@ -6,10 +6,10 @@ class ResponseParser {
     }
     receive(string) {
         for (let i = 0; i < string.length; i++) {
-            this.receiveCahr(string.charAt(i))
+            this.receivechar(string.charAt(i))
         }
     }
-    receiveCahr(char) {
+    receivechar(char) {
 
     }
 }
