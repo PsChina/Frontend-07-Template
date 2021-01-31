@@ -25,3 +25,4 @@ module.exports.parserHTML = function parserHTML(html) {
 
 1. 我们用 FSM 来实现 HTML 的分析
 1. 在 HTML 标准中，已经规定了 HTML 的状态
+1. Toy-Browser 只挑选其中一部分状态，完成一个最简版本
