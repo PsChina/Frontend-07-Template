@@ -88,6 +88,7 @@ function beforeAttributeName(c) {
 function selfClosingStartTag(c) {
     if (c == '>') {
         currentToken.isSelfClosing = true
+        return data
     } else if (c == 'EOF') {
 
     } else {
@@ -110,3 +111,7 @@ module.exports.parserHTML = function parserHTML(html) {
 
 1. 在这一步暂时忽略了属性
 
+## HTML 解析 ｜ 创建元素
+
+1. 在状态机中，出了状态迁移，我们还要加入业务逻辑
+1. 我们在标签结束状态提交标签token

@@ -2,12 +2,23 @@ const EOF = Symbol("EOF")
 
 let currentToken = {}
 
+function emit(token) {
+    console.log(token)
+}
+
 function data(c) {
     if (c == '<') {
         return tagOpen
     } else if (c == EOF) {
+        emit({
+            type: 'EOF'
+        })
         return
     } else {
+        emit({
+            type: 'text',
+            content: c
+        })
         return data
     }
 }
@@ -16,6 +27,10 @@ function tagOpen(c) {
     if (c == '/') {
         return endTagOpen
     } else if (c.match(/^[a-zA-Z]$/)) {
+        currentToken = {
+            type: 'startTag',
+            tagName: ''
+        }
         return tagName(c)
     } else {
         return
@@ -28,8 +43,10 @@ function tagName(c) {
     } else if (c == '/') {
         return selfClosingStartTag
     } else if (c.match(/^[a-zA-Z]$/)) {
+        currentToken.tagName += c
         return tagName
     } else if (c == '>') {
+        emit(currentToken)
         return data
     } else {
         return tagName
@@ -51,6 +68,7 @@ function beforeAttributeName(c) {
 function selfClosingStartTag(c) {
     if (c == '>') {
         currentToken.isSelfClosing = true
+        return data
     } else if (c == 'EOF') {
 
     } else {
