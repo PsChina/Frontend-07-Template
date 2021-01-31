@@ -12,7 +12,15 @@ http.createServer((request, response) => {
         response.writeHead(200, {
             'Content-Type': 'text/html'
         })
-        response.end('Hello world\n')
+        response.end(`
+<html name=a >
+<head>
+<style>
+
+</style>
+</head>
+</html>
+        `)
     })
 }).listen(8088)
 
