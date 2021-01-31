@@ -1,6 +1,6 @@
 const EOF = Symbol("EOF")
 
-let currentToken = {}
+let currentToken = null, currentAttribute = null
 
 function emit(token) {
     console.log(token)
@@ -56,14 +56,129 @@ function tagName(c) {
 function beforeAttributeName(c) {
     if (c.match(/^[\t\n\f ]$/)) {
         return beforeAttributeName
-    } else if (c == '>') {
-        return data
+    } else if (c == '/' || c == '>' || c == EOF) {
+        return afterAttributeName
     } else if (c == '=') {
-        return beforeAttributeName
+
     } else {
-        return beforeAttributeName
+        currentAttribute = {
+            name: '',
+            value: ''
+        }
+        return attributeName(c)
     }
 }
+
+function attributeName(c) {
+    if (c.match(/^[\t\n\f ]$/) || c == '/' || c == '>' || c == EOF) {
+        return afterAttributeName(c)
+    } else if (c == '=') {
+        return beforeAttributeValue
+    } else if (c == '\u0000') {
+
+    } else if (c == '"' || c == '\'' || c == '<') {
+
+    } else {
+        currentAttribute.name += c
+        return attributeName
+    }
+}
+
+function afterAttributeName(c) {
+
+}
+
+function beforeAttributeValue(c) {
+    if (c.match(/^[\t\n\f ]$/) || c == '/' || c == '>' || c == EOF) {
+        return beforeAttributeValue
+    } else if (c == '"') {
+        return doubleQuotedAttributeValue
+    } else if (c == '\'') {
+        return singleQuotedAttributeValue
+    } else if (c == '>') {
+
+    } else {
+        return UnquotedAttributeValue
+    }
+}
+
+function doubleQuotedAttributeValue(c) {
+    if (c == '\"') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        return afterAttributeName
+    } else if (c == '\u0000') {
+
+    } else if (c == EOF) {
+
+    } else {
+        currentAttribute.value += c
+        return doubleQuotedAttributeValue
+    }
+}
+
+function singleQuotedAttributeValue(c) {
+    if (c == '\'') {
+        currentToken[currentToken.name] = currentAttribute.value
+        return afterAttributeValue
+    } else if (c == '\u0000') {
+
+    } else if (c == EOF) {
+
+    } else {
+        currentAttribute.value += c
+        return doubleQuotedAttributeValue
+    }
+}
+
+
+
+function UnquotedAttributeValue(c) {
+    if (c.match(/^[\t\n\f ]$/)) {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        return beforeAttributeName
+    } else if (c == '/') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        return selfClosingStartTag
+    } else if (c == '>') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        emit(currentToken)
+        return data
+    } else if (c == '\u0000') {
+
+    } else if (c == '"' || c == '\'' || c == '<' || c == '=') {
+
+    } else if (c == EOF) {
+
+    } else {
+        currentAttribute.value += c
+        return UnquotedAttributeValue
+    }
+}
+
+function afterAttributeValue(c) {
+    if (c.match(/^[\t\n\f ]$/)) {
+        return afterAttributeName
+    } else if (c == '/') {
+        return selfClosingStartTag
+    } else if (c == '=') {
+        return beforeAttributeValue
+    } else if (c === '>') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        emit(currentToken)
+        return data
+    } else if (c == EOF) {
+
+    } else {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        currentAttribute = {
+            name: '',
+            value: ''
+        }
+        return attributeName(c)
+    }
+}
+
+
 
 function selfClosingStartTag(c) {
     if (c == '>') {

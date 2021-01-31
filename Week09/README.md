@@ -115,3 +115,5 @@ module.exports.parserHTML = function parserHTML(html) {
 
 1. 在状态机中，出了状态迁移，我们还要加入业务逻辑
 1. 我们在标签结束状态提交标签token
+
+## HTML 解析 | 处理属性
