@@ -117,3 +117,9 @@ module.exports.parserHTML = function parserHTML(html) {
 1. 我们在标签结束状态提交标签token
 
 ## HTML 解析 | 处理属性
+
+1. 属性值分为单引号、双引号、无引号三种写法，因此需要较多状态处理
+
+1. 处理属性和处理标签类似 
+
+1. 当属性结束时，我们把属性加到标签 Token 上

@@ -105,7 +105,7 @@ function beforeAttributeValue(c) {
 function doubleQuotedAttributeValue(c) {
     if (c == '\"') {
         currentToken[currentAttribute.name] = currentAttribute.value
-        return afterAttributeName
+        return afterQuotedAttributeValue
     } else if (c == '\u0000') {
 
     } else if (c == EOF) {
@@ -178,7 +178,22 @@ function afterAttributeValue(c) {
     }
 }
 
+function afterQuotedAttributeValue(c) {
+    if (c.match(/^[\t\f\n ]$/)) {
+        return beforeAttributeName
+    } else if (c == '/') {
+        return selfClosingStartTag
+    } else if (c == '>') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        emit(currentToken)
+        return data
+    } else if (c == EOF) {
 
+    } else {
+        currentAttribute.value += c
+        return doubleQuotedAttributeValue
+    }
+}
 
 function selfClosingStartTag(c) {
     if (c == '>') {
