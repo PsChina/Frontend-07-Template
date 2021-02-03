@@ -126,3 +126,9 @@ module.exports.parserHTML = function parserHTML(html) {
 
 ## HTML 解析 ｜ 用 token 构建DOM树
 
+总结：
+
+1. 从标签构建 DOM 树的基本技巧是使用栈。
+1. 遇到开始标签时创建元素并且入栈，遇到结束标签时出栈。
+1. 自封闭节点可视为入栈后立即出栈。
+1. 任何元素的父元素都是它入栈前的栈顶元素。

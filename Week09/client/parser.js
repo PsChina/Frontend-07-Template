@@ -1,9 +1,44 @@
 const EOF = Symbol("EOF")
 
-let currentToken = null, currentAttribute = null
+let currentToken = null, currentAttribute = null, currentTextNode = null
+
+let stack = [{ type: 'document', children: [] }]
 
 function emit(token) {
-    console.log(token)
+    debugger
+    if (token.type === 'text') {
+        return
+    }
+    let top = stack[stack.length - 1]
+    if (token.type === 'startTag') {
+        let element = {
+            type: 'element',
+            children: [],
+            attributes: []
+        }
+        element.tagName = token.tagName
+        for (let p in token) {
+            if (p !== 'type' && p !== 'tagName') {
+                element.attributes.push({
+                    name: p,
+                    value: token[p]
+                })
+            }
+        }
+        top.children.push(element)
+        element.parent = top
+        if (!token.selfClosingStartTag) {
+            stack.push(element)
+        }
+        currentTextNode = null
+    } else if (token.type == 'endTag') {
+        if (top.tagName != token.tagName) {
+            throw new Error("Tag start end does't match!")
+        } else {
+            stack.pop()
+        }
+        currentTextNode = null
+    }
 }
 
 function data(c) {
@@ -57,7 +92,7 @@ function beforeAttributeName(c) {
     if (c.match(/^[\t\n\f ]$/)) {
         return beforeAttributeName
     } else if (c == '/' || c == '>' || c == EOF) {
-        return afterAttributeName
+        return afterAttributeName(c)
     } else if (c == '=') {
 
     } else {
@@ -119,7 +154,7 @@ function beforeAttributeValue(c) {
     } else if (c == '>') {
 
     } else {
-        return UnquotedAttributeValue
+        return UnquotedAttributeValue(c)
     }
 }
 
