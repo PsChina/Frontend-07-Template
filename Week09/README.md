@@ -123,3 +123,6 @@ module.exports.parserHTML = function parserHTML(html) {
 1. 处理属性和处理标签类似 
 
 1. 当属性结束时，我们把属性加到标签 Token 上
+
+## HTML 解析 ｜ 用 token 构建DOM树
+

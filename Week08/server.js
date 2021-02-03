@@ -19,6 +19,11 @@ http.createServer((request, response) => {
 
 </style>
 </head>
+<body>
+    <div>
+        hello world
+    </div>
+</body>
 </html>
         `)
     })

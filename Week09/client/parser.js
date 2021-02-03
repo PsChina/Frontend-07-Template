@@ -76,8 +76,10 @@ function attributeName(c) {
         return beforeAttributeValue
     } else if (c == '\u0000') {
 
-    } else if (c == '"' || c == '\'' || c == '<') {
-
+    } else if (c == '"' || c == '\'') {
+        return
+    } else if (c == '<') {
+        return tagOpen
     } else {
         currentAttribute.name += c
         return attributeName
@@ -85,7 +87,26 @@ function attributeName(c) {
 }
 
 function afterAttributeName(c) {
+    if (c.match(/^[\t\n\f ]$/)) {
+        return afterAttributeName
+    } else if (c === '/') {
+        return selfClosingStartTag
+    } else if (c === '=') {
+        return beforeAttributeValue
+    } else if (c === '>') {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        emit(currentToken)
+        return data
+    } else if (c === EOF) {
 
+    } else {
+        currentToken[currentAttribute.name] = currentAttribute.value
+        currentAttribute = {
+            name: '',
+            value: ''
+        }
+        return attributeName(c)
+    }
 }
 
 function beforeAttributeValue(c) {
@@ -206,7 +227,19 @@ function selfClosingStartTag(c) {
     }
 }
 
+function endTagOpen(c) {
+    if (c.match(/^[a-zA-Z]$/)) {
+        currentToken = {
+            tagName: '',
+            type: 'endTag'
+        }
+        return tagName(c)
+    } else if (c == '>') {
 
+    } else if (c == EOF) {
+
+    }
+}
 
 
 
