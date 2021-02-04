@@ -1,3 +1,4 @@
+const css = require('css')
 const EOF = Symbol("EOF")
 
 let currentToken = null, currentAttribute = null, currentTextNode = null
@@ -32,6 +33,9 @@ function emit(token) {
         if (top.tagName != token.tagName) {
             throw new Error("Tag start end does't match!")
         } else {
+            if (top.tagName === 'style') {
+                addCSSRules(top.children[0].content)
+            }
             stack.pop()
         }
         currentTextNode = null
@@ -280,6 +284,13 @@ function endTagOpen(c) {
     } else if (c == EOF) {
 
     }
+}
+
+let rules = []
+
+function addCSSRules(cssText) {
+    const ast = css.parse(cssText)
+    rules.push(...ast.stylesheet.rules)
 }
 
 

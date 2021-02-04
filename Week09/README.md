@@ -138,3 +138,14 @@ module.exports.parserHTML = function parserHTML(html) {
 1. 文本标签与自封闭标签类似
 1. 多个文本节点需要合并
 
+## CSS 计算 | 收集 CSS 规则 
+
+### 环境准备
+
+```bash
+npm i css
+```
+
+1. 遇到 style 标签时， 我们把 css 规则保存起来 
+1. 这里我们调用 css Parser 来分析 CSS 规则
+1. 这里我们必须要仔细研究此库分析 CSS 规则的格式
