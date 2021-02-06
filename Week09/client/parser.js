@@ -23,6 +23,9 @@ function emit(token) {
                 })
             }
         }
+
+        computeCSS(element)
+
         top.children.push(element)
         element.parent = top
         if (!token.selfClosingStartTag) {
@@ -291,6 +294,11 @@ let rules = []
 function addCSSRules(cssText) {
     const ast = css.parse(cssText)
     rules.push(...ast.stylesheet.rules)
+}
+
+
+function computeCSS(element) {
+    // get rules and element
 }
 
 
