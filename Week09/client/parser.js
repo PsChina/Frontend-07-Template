@@ -299,6 +299,7 @@ function addCSSRules(cssText) {
 
 function computeCSS(element) {
     // get rules and element
+    var elements = stack.slice().reverse();
 }
 
 
