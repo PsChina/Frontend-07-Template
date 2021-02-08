@@ -300,6 +300,37 @@ function addCSSRules(cssText) {
 function computeCSS(element) {
     // get rules and element
     var elements = stack.slice().reverse();
+
+    if (element.computedStyle) {
+        element.computedStyle = {}
+    }
+
+    for (let rule of rules) {
+        const selectorParts = rule.selectors[0].split(' ').reverse();
+
+        if (!match(element, selectorParts[0])) {
+            continue
+        }
+
+        let matched = false, j = 1
+        for (let i = 0; i < elements.length; i++) {
+            if (match(elements[i], selectorParts[j])) {
+                j++
+            }
+        }
+        if (j >= selectorParts.length) {
+            matched = true
+        }
+
+        if (matched) {
+            console.log('Element', element, 'match rule', rule)
+        }
+
+    }
+}
+
+function match(element, selectorPart) {
+    return false
 }
 
 
