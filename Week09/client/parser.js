@@ -329,7 +329,20 @@ function computeCSS(element) {
     }
 }
 
-function match(element, selectorPart) {
+function match(element, selector) {
+    if (!selector || !element.attributes) {
+        return false
+    }
+    if (selector.charAt(0) == '#') {
+        var attr = element.attributes.filter(attr => attr.name === 'id')
+        if (attr && attr.value === selector.replace('#', '')) {
+            return true
+        } else {
+            if (element.tagName === selector) {
+                return true
+            }
+        }
+    }
     return false
 }
 
