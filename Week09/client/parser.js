@@ -324,14 +324,52 @@ function computeCSS(element) {
 
         if (matched) {
             //console.log('Element', element, 'match rule', rule)
-            var computedStyle = element.computedStyle
-            for (var declaration of rule.declarations) {
-                computedStyle[declaration.property].value = declaration.value
+            const sp = specificity(rule.selectors[0])
+            const computedStyle = element.computedStyle
+            for (const declaration of rule.declarations) {
+                if (!computedStyle[declaration.property]) {
+                    computedStyle[declaration.property] = {}
+                }
+                if (!computedStyle[declaration.property].specificity) {
+                    computedStyle[declaration.property].value = declaration.value
+                    computedStyle[declaration.property].specificity = sp
+                } else if (compare(computedStyle[declaration.property].specificity, sp) < 0) {
+                    computedStyle[declaration.property].value = declaration.value
+                    computedStyle[declaration.property].specificity = sp
+                }
             }
             console.log(element.computedStyle)
         }
-
     }
+}
+
+function specificity(selector) {
+    const p = [0, 0, 0, 0]
+    const selectorParts = selector.split(' ')
+    for (const part of selectorParts) {
+        const char = part.charAt(0)
+        if (char === '#') {
+            p[1] += 1
+        } else if (char === '.') {
+            p[2] += 1
+        } else {
+            p[3] += 1
+        }
+    }
+    return p
+}
+
+function compare(sp1, sp2) {
+    if (sp1[0] - sp2[0]) {
+        return sp1[0] - sp2[0]
+    }
+    if (sp1[1] - sp2[1]) {
+        return sp1[1] - sp2[1]
+    }
+    if (sp1[2] - sp2[2]) {
+        return sp1[2] - sp2[2]
+    }
+    return sp1[3] - sp2[3]
 }
 
 function match(element, selector) {

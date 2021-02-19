@@ -177,3 +177,10 @@ npm i css
 ## CSS 计算 ｜ 生成 computed 属性
 
 1. 一旦选择器匹配，就应用选择器到元素上，形成 computedStyle 
+
+## CSS 计算 | specificity 的计算逻辑
+
+1. CSS 规则是根据 specificity 和后来优先规则覆盖
+1. specificity 是个四元组，越左边权重越高
+1. 一个 CSS 规则的 specificity 根据包含的简单选择器相加而成。
+
