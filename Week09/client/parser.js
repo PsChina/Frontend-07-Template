@@ -323,7 +323,12 @@ function computeCSS(element) {
         }
 
         if (matched) {
-            console.log('Element', element, 'match rule', rule)
+            //console.log('Element', element, 'match rule', rule)
+            var computedStyle = element.computedStyle
+            for (var declaration of rule.declarations) {
+                computedStyle[declaration.property].value = declaration.value
+            }
+            console.log(element.computedStyle)
         }
 
     }
