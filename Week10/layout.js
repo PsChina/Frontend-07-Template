@@ -1,8 +1,3 @@
-学习笔记
-
-## 排版 ｜ 根据浏览器属性进行排版
-
-```js
 function getStyle(element) {
     if (!element.style) {
         element.style = {}
@@ -110,4 +105,3 @@ function layout(element) {
 }
 
 module.exports = layout
-```
