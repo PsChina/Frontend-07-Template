@@ -102,6 +102,68 @@ function layout(element) {
         crossBase = 0
         crossSign = 1
     }
+
+    let isAutoMainSize = false
+    if (!style[mainSize]) {
+        elementStyle[mainSize] = 0
+        for (let i = 0; i < items.length; i++) {
+            const itemStyle = items[i]
+            if (itemStyle[mainSize] !== null || itemStyle[mainSize] === (void 0)) {
+                elementStyle[mainSize] = elementStyle[mainSize]
+            }
+        }
+        isAutoMainSize = true
+    }
+
+    const flexLine = [],
+        flexLines = [flexLine]
+
+    let mainSpace = elementStyle[mainSize],
+        crossSpace = 0
+
+    for (var i = 0; i < items.length; i++) {
+        const item = items[i]
+        const itemStyle = getStyle(item)
+        if (itemStyle[mainSize] === null) {
+            itemStyle[mainSize] = 0
+        }
+
+        if (itemStyle[mainSize] === null) {
+            itemStyle[mainSize] = 0
+        }
+
+        if (itemStyle.flex) {
+            flexLine.push(item)
+        } else if (style.flexWrap === 'nowrap' && isAutoMainSize) {
+            mainSpace -= itemStyle[mainSize]
+            if (itemStyle[corossSize] !== null && itemStyle[corossSize] !== (void 0)) {
+                crossSpace = mainSpace = Math.max(crossSpace, itemStyle[corossSize])
+                flexLine.push(item)
+            }
+        } else {
+            if (itemStyle[mainSize] > style[mainSize]) {
+                itemStyle[mainSize] = style[mainSize]
+            }
+            if (mainSpace < itemStyle[mainSize]) {
+                flexLine.mainSpace = mainSpace
+                flexLine.crossSpace = crossSpace
+                flexLine = [item]
+                flexLines.push(flexLine)
+                mainSpace = style[mainSize]
+                crossSpace = 0
+            } else {
+                flexLine.push(item)
+            }
+            if (itemStyle[crossSize] !== null && itemStyle[crossSize] !== (void 0)) {
+                crossSpace = Math.max(crossSpace, itemStyle[crossSize])
+            }
+            mainSpace -= itemStyle[mainSize]
+        }
+    }
+    flexLine.mainSpace = mainSpace
+
+    console.log(items)
+
 }
 
 module.exports = layout

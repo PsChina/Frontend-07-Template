@@ -111,3 +111,10 @@ function layout(element) {
 
 module.exports = layout
 ```
+
+## 排版 | 收集元素进行
+
+分行
+
+1. 根据主轴尺寸，把元素分进行
+1. 若设置了no-wrap，则强行分配进第一行
