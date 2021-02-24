@@ -303,13 +303,12 @@ function computeCSS(element) {
     // get rules and element
     var elements = stack.slice().reverse();
 
-    if (element.computedStyle) {
+    if (!element.computedStyle) {
         element.computedStyle = {}
     }
 
     for (let rule of rules) {
         const selectorParts = rule.selectors[0].split(' ').reverse();
-
         if (!match(element, selectorParts[0])) {
             continue
         }
@@ -325,7 +324,7 @@ function computeCSS(element) {
         }
 
         if (matched) {
-            //console.log('Element', element, 'match rule', rule)
+
             const sp = specificity(rule.selectors[0])
             const computedStyle = element.computedStyle
             for (const declaration of rule.declarations) {
@@ -340,9 +339,9 @@ function computeCSS(element) {
                     computedStyle[declaration.property].specificity = sp
                 }
             }
-            console.log(element.computedStyle)
         }
     }
+
 }
 
 function specificity(selector) {
@@ -379,7 +378,7 @@ function match(element, selector) {
         return false
     }
     if (selector.charAt(0) == '#') {
-        var attr = element.attributes.filter(attr => attr.name === 'id')
+        var attr = element.attributes.filter(attr => attr.name === 'id')[0]
         if (attr && attr.value === selector.replace('#', '')) {
             return true
         } else {
@@ -399,4 +398,5 @@ module.exports.parserHTML = function parserHTML(html) {
         state = state(c)
     }
     state = state(EOF)
+    return stack[0]
 }

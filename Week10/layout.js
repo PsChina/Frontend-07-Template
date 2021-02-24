@@ -241,7 +241,7 @@ function layout(element) {
         })
     }
 
-    let crossSpace
+    //let crossSpace
 
     if (!style[crossSize]) {
         crossSpace = 0

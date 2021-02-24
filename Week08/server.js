@@ -16,11 +16,15 @@ http.createServer((request, response) => {
 <html name=a123 >
 <head>
 <style>
-
+        #app {
+            width:100px;
+            height:100px;
+            background-color:rgb(255,0,0);
+        }
 </style>
 </head>
 <body>
-    <div>
+    <div id="app">
         hello world
     </div>
 </body>

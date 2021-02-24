@@ -130,3 +130,9 @@ module.exports = layout
 1. 根据每一行中最大元素尺寸计算行高
 1. 根据行高 flex-align 和 item-align 确定元素具体位置
 
+## 排版 ｜ 绘制单个元素
+
+1. 绘制需依赖来一个图新环境
+1. 课程采用 npm 包 images
+1. 绘制在一个 viewport 上绘制
+1. 与绘制相关的属性: `background-color` 、 `border` 、 `background-image` 等

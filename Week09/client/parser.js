@@ -301,7 +301,7 @@ function computeCSS(element) {
     // get rules and element
     var elements = stack.slice().reverse();
 
-    if (element.computedStyle) {
+    if (!element.computedStyle) {
         element.computedStyle = {}
     }
 
@@ -377,7 +377,7 @@ function match(element, selector) {
         return false
     }
     if (selector.charAt(0) == '#') {
-        var attr = element.attributes.filter(attr => attr.name === 'id')
+        var attr = element.attributes.filter(attr => attr.name === 'id')[0]
         if (attr && attr.value === selector.replace('#', '')) {
             return true
         } else {

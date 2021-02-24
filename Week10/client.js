@@ -1,6 +1,19 @@
 const net = require('net');
 const parser = require('./parser.js')
+const images = require('images')
 
+function render(viewport, element) {
+    if (element.style) {
+        var img = images(element.style.width, element.style.height)
+        if (element.style['background-color']) {
+            let color = element.style['background-color'] || 'rgb(0,0,0)'
+            console.log(color)
+            color.match(/rgb\((\d+),(\d+),(\d+)\)/)
+            img.fill(Number(RegExp.$1), Number(RegExp.$2), Number(RegExp.$3))
+            viewport.draw(img, element.style.left || 0, element.style.top || 0)
+        }
+    }
+}
 class TrunkedBodyPaser {
     constructor() {
         this.WAITING_LENGTH = 0
@@ -202,6 +215,12 @@ void async function () {
     let response = await request.send()
 
     //console.log('response=>', response)
-    parser.parserHTML(response.body)
+    let dom = parser.parserHTML(response.body)
+
+    let viewport = images(800, 600)
+    console.log('dom', dom.children[1].children[3].children[1])
+    render(viewport, dom.children[1].children[3].children[1])
+
+    viewport.save('viewport.jpg')
 
 }();
