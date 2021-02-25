@@ -1,4 +1,7 @@
 function kmp(source, pattern) {
+    if (source === pattern) {
+        return true
+    }
     const { length } = pattern
     const table = Array(length).fill(0)
     {

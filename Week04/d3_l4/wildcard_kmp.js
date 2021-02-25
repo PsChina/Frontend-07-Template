@@ -25,12 +25,12 @@ function wildCard(source, pattern) {
 
     for (let p = 0; p < startCount - 1; p++) {
         i++
-        let subPattrn = ''
+        let subPattern = ''
         while (pattern[i] !== '*') {
-            subPattrn += pattern[i]
+            subPattern += pattern[i]
             i++
         }
-        const res = kmp(source, subPattrn, lastIndex)
+        const res = kmp(source, subPattern, lastIndex)
         if (res) {
             lastIndex = res.lastIndex
         } else {
@@ -38,7 +38,7 @@ function wildCard(source, pattern) {
         }
     }
 
-    for (let j = 0; i <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
+    for (let j = 0; j <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
         if (source[source.length - j] !== pattern[pattern.length - j] && pattern[pattern.length - j] !== '?') {
             return false
         }
@@ -48,6 +48,9 @@ function wildCard(source, pattern) {
 }
 
 function kmp(source, pattern, start = 0, end = source.length) {
+    if (source === pattern) {
+        return true
+    }
     const { length } = pattern
     const table = Array(length).fill(0)
     {
@@ -80,7 +83,11 @@ function kmp(source, pattern, start = 0, end = source.length) {
             }
             if (j === pattern.length) {
                 const res = [i - j, i - 1]
-                res.lastIndex = i - 1 - table[table.length - 1]
+                if (table.length) {
+                    res.lastIndex = i - table[table.length - 1]
+                } else {
+                    res.lastIndex = i + 1
+                }
                 return res
             }
         }

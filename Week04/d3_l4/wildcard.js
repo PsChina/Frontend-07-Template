@@ -25,12 +25,12 @@ function wildCard(source, pattern) {
 
     for (let p = 0; p < startCount - 1; p++) {
         i++
-        let subPattrn = ''
+        let subPattern = ''
         while (pattern[i] !== '*') {
-            subPattrn += pattern[i]
+            subPattern += pattern[i]
             i++
         }
-        const reg = new RegExp(subPattrn.replace(/\?/g, '[\s\S]', 'g'))
+        const reg = new RegExp(subPattern.replace(/\?/g, '[\s\S]'), 'g')
         reg.lastIndex = lastIndex
 
         const res = reg.exec(source)
@@ -41,7 +41,7 @@ function wildCard(source, pattern) {
         lastIndex = reg.lastIndex
     }
 
-    for (let j = 0; i <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
+    for (let j = 0; j <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
         if (source[source.length - j] !== pattern[pattern.length - j] && pattern[pattern.length - j] !== '?') {
             return false
         }

@@ -1,4 +1,7 @@
 function kmp(source, pattern, start = 0, end = source.length) {
+    if (source === pattern) {
+        return true
+    }
     const { length } = pattern
     const table = Array(length).fill(0)
     {
@@ -31,7 +34,11 @@ function kmp(source, pattern, start = 0, end = source.length) {
             }
             if (j === pattern.length) {
                 const res = [i - j, i - 1]
-                res.lastIndex = i - 1 - table[table.length - 1]
+                if (table.length) {
+                    res.lastIndex = i - table[table.length - 1]
+                } else {
+                    res.lastIndex = i + 1
+                }
                 return res
             }
         }
