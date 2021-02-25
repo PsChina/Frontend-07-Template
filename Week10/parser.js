@@ -309,6 +309,7 @@ function computeCSS(element) {
 
     for (let rule of rules) {
         const selectorParts = rule.selectors[0].split(' ').reverse();
+
         if (!match(element, selectorParts[0])) {
             continue
         }
@@ -339,6 +340,7 @@ function computeCSS(element) {
                     computedStyle[declaration.property].specificity = sp
                 }
             }
+
         }
     }
 
@@ -380,6 +382,15 @@ function match(element, selector) {
     if (selector.charAt(0) == '#') {
         var attr = element.attributes.filter(attr => attr.name === 'id')[0]
         if (attr && attr.value === selector.replace('#', '')) {
+            return true
+        } else {
+            if (element.tagName === selector) {
+                return true
+            }
+        }
+    } else if (selector.charAt(0) == '.') {
+        var attr = element.attributes.filter(attr => attr.name === 'class')[0]
+        if (attr && attr.value === selector.replace('.', '')) {
             return true
         } else {
             if (element.tagName === selector) {

@@ -33,12 +33,14 @@ function layout(element) {
     items.sort((a, b) => {
         return (a.order || 0) - (b.order || 0)
     })
-    const style = elementStyle
+    const style = elementStyle;
+
     ['width', 'height'].forEach(size => {
         if (style[size] === 'auto' || style[size] === '') {
             style[size] = null
         }
     })
+
     if (!style.flexDireaction || style.flexDireaction === 'auto') {
         style.flexDireaction = 'row'
     }
@@ -127,12 +129,19 @@ module.exports = layout
 
 ## 排版 | 计算交叉轴
 
-1. 根据每一行中最大元素尺寸计算行高
+1. 根据每一行中最大元素尺寸计算行高
 1. 根据行高 flex-align 和 item-align 确定元素具体位置
 
-## 排版 ｜ 绘制单个元素
+## 渲染 ｜ 绘制单个元素
 
 1. 绘制需依赖来一个图新环境
 1. 课程采用 npm 包 images
 1. 绘制在一个 viewport 上绘制
 1. 与绘制相关的属性: `background-color` 、 `border` 、 `background-image` 等
+
+## 渲染 | 绘制 DOM 树
+
+1. 递归调用子元素的绘制方法完成 DOM 树的绘制
+1. 忽略一些不需要绘制的节点
+1. 实际的浏览器中，文字的绘制是难点，需要依赖字体库，本课程忽略。
+1. 实际的浏览器中，还会进行一些 compositing ，这里我们忽略。

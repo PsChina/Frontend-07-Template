@@ -28,7 +28,8 @@ function layout(element) {
     items.sort((a, b) => {
         return (a.order || 0) - (b.order || 0)
     })
-    const style = elementStyle
+    const style = elementStyle;
+
     ['width', 'height'].forEach(size => {
         if (style[size] === 'auto' || style[size] === '') {
             style[size] = null
@@ -48,7 +49,7 @@ function layout(element) {
     }
 
     let mainSize, mainStart, mainEnd, mainSign, mainBase,
-        corossSize, corssStart, crossEnd, crossSign, crossBase
+        crossSize, corssStart, crossEnd, crossSign, crossBase
     if (style.flexDireaction === 'row') {
         mainSize = 'width'
         mainStart = 'left'
@@ -56,7 +57,7 @@ function layout(element) {
         mainSign = +1
         mainBase = 0
 
-        corossSize = 'height'
+        crossSize = 'height'
         corssStart = 'top'
         crossEnd = 'bottom'
     }
@@ -67,7 +68,7 @@ function layout(element) {
         mainSign = -1
         mainBase = style.width
 
-        corossSize = 'height'
+        crossSize = 'height'
         corssStart = 'top'
         crossEnd = 'bottom'
     }
@@ -78,7 +79,7 @@ function layout(element) {
         mainSign = +1
         mainBase = 0
 
-        corossSize = 'width'
+        crossSize = 'width'
         corssStart = 'left'
         crossEnd = 'right'
     }
@@ -89,7 +90,7 @@ function layout(element) {
         mainSign = -1
         mainBase = style.height
 
-        corossSize = 'width'
+        crossSize = 'width'
         corssStart = 'left'
         crossEnd = 'right'
     }
@@ -136,8 +137,8 @@ function layout(element) {
             flexLine.push(item)
         } else if (style.flexWrap === 'nowrap' && isAutoMainSize) {
             mainSpace -= itemStyle[mainSize]
-            if (itemStyle[corossSize] !== null && itemStyle[corossSize] !== (void 0)) {
-                crossSpace = mainSpace = Math.max(crossSpace, itemStyle[corossSize])
+            if (itemStyle[crossSize] !== null && itemStyle[crossSize] !== (void 0)) {
+                crossSpace = mainSpace = Math.max(crossSpace, itemStyle[crossSize])
                 flexLine.push(item)
             }
         } else {
@@ -185,11 +186,11 @@ function layout(element) {
         }
     } else {
         flexLines.forEach((items) => {
-            const mainSpace = item.mainSpace
+            const mainSpace = items.mainSpace
             let flexTotal = 0
             for (let i = 0; i < items.length; i++) {
                 const item = items[i]
-                const itemStyle = items[i]
+                const itemStyle = getStyle(item)
                 if ((itemStyle.flex !== null) && (itemStyle.flex !== (void 0))) {
                     flexTotal += itemStyle.flex
                     continue
@@ -233,6 +234,7 @@ function layout(element) {
                 }
                 for (let i = 0; i < items.length; i++) {
                     const item = items[i]
+                    const itemStyle = getStyle(item)
                     itemStyle[mainStart] = currentMain
                     itemStyle[mainEnd] = itemStyle[mainStart] + mainSign * itemStyle[mainSize]
                     currentMain = itemStyle[mainEnd] + step
@@ -322,7 +324,7 @@ function layout(element) {
         }
         crossBase += crossSign * (lineCrossSize + step)
     })
-    console.log(items)
+
 }
 
 module.exports = layout

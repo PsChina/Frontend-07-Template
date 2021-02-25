@@ -12,7 +12,13 @@ function render(viewport, element) {
             viewport.draw(img, element.style.left || 0, element.style.top || 0)
         }
     }
+    if (element.children) {
+        for (const child of element.children) {
+            render(viewport, child)
+        }
+    }
 }
+
 class TrunkedBodyPaser {
     constructor() {
         this.WAITING_LENGTH = 0
@@ -89,7 +95,7 @@ class ResponseParser {
         for (let i = 0; i < string.length; i++) {
             this.receivechar(string.charAt(i))
         }
-        //console.log(this.headers)
+
     }
     receivechar(char) {
         if (this.current === this.WAITING_STATUS_LINE) {
@@ -135,7 +141,7 @@ class ResponseParser {
                 this.current = this.WAITING_BODY
             }
         } else if (this.current === this.WAITING_BODY) {
-            //console.log(char)
+
             this.bodyParser.receivechar(char)
         }
     }
@@ -175,9 +181,8 @@ class Request {
                 })
             }
             connection.on('data', (data) => {
-                //console.log(data.toString())
+
                 parser.receive(data.toString())
-                console.log(parser.isFinished, data.toString())
                 if (parser.isFinished) {
                     resolve(parser.response)
                     connection.end()
@@ -198,7 +203,7 @@ ${this.bodyText}`
 }
 
 void async function () {
-    console.log('Request')
+
     let request = new Request({
         method: 'POST', // HTTP 协议要求
         host: '127.0.0.1',// TCP 协议的要求
@@ -213,12 +218,11 @@ void async function () {
     })
     let response = await request.send()
 
-    //console.log('response=>', response)
     let dom = parser.parserHTML(response.body)
 
     let viewport = images(800, 600)
-    console.log('dom', dom.children[1].children[3].children[1])
-    render(viewport, dom.children[1].children[3].children[1])
+
+    render(viewport, dom)
 
     viewport.save('viewport.jpg')
 
