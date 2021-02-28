@@ -30,3 +30,28 @@ at-rule
 1. @supports: https://www.w3.org/TR/css3-conditional/
 1. @namespace: https://www.w3.org/TR/css-namespaces-3/
 
+## CSS 总论 ｜ CSS 规则的结构
+
+1. 选择器
+1. 声明
+    1. Key
+    1. Value
+
+```css
+div{
+    background:blue;
+}
+```
+
+1. Selector
+    1. https://www.w3.org/TR/selector-3/
+    1. https://www.w3.org/TR/selectors-4/
+
+1. Key
+    1. Properties
+    1. Variables: https://www.w3.org/TR/css-variavles/
+
+1. Value
+    1. https://www.w3.org/TR/css-values-4/
+
+
