@@ -54,4 +54,12 @@ div{
 1. Value
     1. https://www.w3.org/TR/css-values-4/
 
+## CSS 总论 ｜ 收集标准
+
+`www.w3.org/TR`这个网站可以搜索所有的CSS标准和提案
+
+```js
+Array.prototype.slice.call(document.querySelector('#container').children).filter(e=>e.getAttribute('data-tag').match(/css/).map(e=>({name:e.children[1].innerText,url:e.children[1].children[0].href})))
+```
+
 
