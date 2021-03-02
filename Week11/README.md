@@ -75,13 +75,20 @@ Array.prototype.slice.call(document.querySelector('#container').children).filter
 
 ### 简单选择器
 
-1. *
+1. `*`
+    选择任意元素
 1. div svg｜a
+    svg html 和 MathML 都有各自的命名空间 除了 svg 的 a 和 html 的 a 有冲突以为其实他们名字都不一样。
 1. .cls
+    class 选择器
 1. #id
+    id选择器
 1. [attr=value]
+    属性选择器
 1. :hover
+    伪类选择器
 1. ::before
+    伪元素选择器
 
 ### 复合选择器
 
