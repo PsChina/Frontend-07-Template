@@ -102,3 +102,21 @@ Array.prototype.slice.call(document.querySelector('#container').children).filter
 1. <复合选择器> \"\~\" <复合选择器>
 1. <复合选择器> \"\+\" <复合选择器>
 1. <复合选择器> \"||\" <复合选择器>
+
+## CSS 选择器 ｜ 选择器的优先级
+
+1. 简单选择器
+```css
+/*1        2*/
+#id div.a#id {
+    /**/
+}
+/*
+[0,2,1,1]
+style id class tagName
+s = 0 * N^3 + 2 * N^2 + 1 * N^1 + 1 * N^0
+取N = 1000000
+S = 2000001000001
+一般取 N = 256 的整次幂
+*/
+```
