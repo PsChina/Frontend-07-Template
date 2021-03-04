@@ -120,3 +120,28 @@ S = 2000001000001
 一般取 N = 256 的整次幂
 */
 ```
+
+## CSS选择器 ｜ 伪类
+
+### 链接/行为
+
+1. :any-link
+1. :link :visited
+1. :hover
+1. :active
+1. :focus
+1. :target
+
+### 树结构
+
+1. :empty
+1. :nth-child()
+1. :nth-last-child()
+1. :first-child :last-child :only-child
+
+以上的选择器中 会增加 css 回溯计算的复杂性 降低性能。特别是`:nth-last-child()`
+
+### 逻辑形
+
+1. :not伪类
+1. :whiere :has
