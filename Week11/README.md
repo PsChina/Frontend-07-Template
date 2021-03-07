@@ -141,7 +141,129 @@ S = 2000001000001
 
 以上的选择器中 会增加 css 回溯计算的复杂性 降低性能。特别是`:nth-last-child()`
 
-### 逻辑形
+### 逻辑型
 
 1. :not伪类
 1. :whiere :has
+
+## CSS 选择器 | 伪元素
+
+常用的伪元素
+
+1. ::before
+1. ::after
+1. ::first-line
+1. ::first-letter
+
+伪元素分为两类，一类是添加一个不存在的元素，另一类是用一个不存在的元素将一些文本括起来的一个集合。
+
+```html
+<div>
+<::before/>
+content conent content
+content conent content
+<::after>
+</div>
+```
+
+```html
+<div>
+<::first-letter>c</::first-letter>ontent conent content
+content conent content
+</div>
+```
+
+```html
+<div>
+<::first-line>content conent content</::first-line>
+content conent content
+</div>
+```
+
+
+### first-line
+
+1. font系列
+1. color系列
+1. background系列
+1. word-spacing
+1. letter-spacing
+1. text-decration
+1. text-transform
+1. line-height
+
+
+### first-tetter
+
+1. font系列
+1. color系列
+1. background系列
+1. text-decoration
+1. text-transform
+1. letter-spacing
+1. word-sapcing
+1. line-height
+1. float
+1. certical-align
+1. 盒模型系列 
+
+
+```js
+    function match(selector, element, isRepeate) {
+        if (!(selector instanceof Array)) {
+            selector = selector.split(' ')
+        }
+        while (selector.length) {
+            const item = selector.pop()
+            const sSelector = item.match(/(#|\.)*[a-zA-Z\-_0-9]+/g)
+            if (sSelector.length > 1) {
+                do {
+                    if (analyse(sSelector.pop(), selector, element, !isRepeate) === false) {
+                        return false
+                    }
+                } while (sSelector.length)
+                if (selector.length) {
+                    return match(selector, element.parentElement, true)
+                } else {
+                    return true
+                }
+            } else {
+                return analyse(item, selector, element, !isRepeate)
+            }
+        }
+        return false
+    }
+
+    function analyse(item, selector, element, onlyCurrent) {
+        const char = item.charAt(0)
+        if (char === '.') {
+            if (element.className.split(' ').includes(item.substring(1))) {
+                if (selector.length) {
+                    return match(selector, element.parentElement, true)
+                } else {
+                    return true
+                }
+            }
+        } else if (char === '#') {
+            if (element.id === item.substring(1)) {
+                if (selector.length) {
+                    return match(selector, element.parentElement, true)
+                } else {
+                    return true
+                }
+            }
+        } else if (char.match(/[a-zA-Z_]/)) {
+            if (element.tagName === item.toUpperCase()) {
+                if (selector.length) {
+                    return match(selector, element.parentElement, true)
+                } else {
+                    return true
+                }
+            }
+        }
+        if (element.parentElement && !onlyCurrent) {
+            return analyse(item, selector, element.parentElement)
+        }
+        return false
+    }
+```
