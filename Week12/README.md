@@ -48,3 +48,27 @@ width = width + padding + border
 box-sizing:content-box
 
 width = width
+
+## CSS 排版 ｜正常流
+
+思考:
+
+我们如何写字？
+
+1. 从左到右书写
+1. 同一行的文字都是对齐的
+1. 一行写满了，就换到下一行
+
+### 正常流排版
+
+1. 收集盒和文字进行
+1. 计算盒和文字在行中的排布
+1. 计算行的排布
+
+计算行的排布叫 IFC  inline-level-formatting-context （行内级格式化上下文）
+
+计算列排布叫 BFC block-level-formatting-context （块级格式化上下文）
+
+
+
+
