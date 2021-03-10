@@ -69,6 +69,23 @@ width = width
 
 计算列排布叫 BFC block-level-formatting-context （块级格式化上下文）
 
+### CSS排版 ｜ 正常流的行级排布
 
+### Baseline
+
+![example](./example.png)
+
+### Text
+
+![text](./text.png)
+
+
+### 行模型
+
+![line-model](./line-model.png)
+
+在文本和 line-box 混排的时候如果 line-box 高度很高（假设line-box和text-botton对齐) 会影响line-top（line-bottom）的位置但是不会影响 text-top 和 text-bottom 的位置
+
+这些属性可以通过 `vertical-align` 去设置。
 
 
