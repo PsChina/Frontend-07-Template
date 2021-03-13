@@ -113,5 +113,48 @@ float 会使得 text 和 float 元素 发生重排 所以不建议频繁的使�
 
 因为只要求周围有这么多空白，并没有要求要与别的元素的边距有那么大的空白。所以只要空白距离满足了即可。
 
+## CSS 排版 ｜ BFC 合并
+
+Block Contaniner: 里面有 BFC 
+
+Block-lever Box: 外面有 BFC 的
+
+Block Box = Block Container + Block-level Box: 里外都有 BFC 的
+
+### Block Container
+
+1. block
+1. inline-block
+1. table-cell
+1. flex item
+1. grid cell
+1. table-caption
+
+
+### Block-Level Box
+
+Block level
+
+1. display:block
+1. display:flex
+1. display:table
+1. display:grid
+...
+
+Inline level
+
+1. display:inline-block
+1. display:inline-table
+1. display:inline-table
+1. display:inline-grid
+...
+
+### BFC 合并
+
+block box && overflow:visibale 会发生 BFC 合并
+
+1. BFC 合并与 float
+1. BFC 合并与边距折叠
+
 
 
