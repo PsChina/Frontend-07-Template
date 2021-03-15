@@ -180,3 +180,64 @@ block box && overflow:visibale 会发生 BFC 合并
 1. 根据行高flex-align和item-align，确定元素具体位置
 
 
+## CSS动画与绘制 ｜ 动画
+
+CSS控制表现控制了三类内容
+
+1. 控制元素的位置和尺寸的信息
+1. 控制绘制和最后实际看到的渲染的信息
+1. 一些有交互与动画的信息
+
+
+### Animation
+
+1. @keyframes定义
+1. animation：使用
+
+```css
+@keyframes mykf {
+    from {
+        background:red;
+    }
+    to{
+        background:yellow;
+    }
+}
+
+div {
+    animation:mykf 5s infinite;
+}
+```
+
+- animation-name 时间曲线
+- animation-duration 动画时常
+- animation-timing-function 动画的时间曲线
+- animation-delay 动画开始前的延迟
+- animation-iteration-count 动画的播放次数
+- animation-direction 动画方向
+
+```css
+@kayframes mykf{
+    0% {
+        top:0;
+        transition:top ease; /* 用 transition 来代替 animation 的timing-function 这样可以分段用不同的动画表示 */
+    }
+    50% {
+        top:30px;
+        transition:top ease-in; 
+    }
+    75% {
+        top:10px;
+        transition:top ease-out; 
+    }
+    100% {
+        top:0;
+        transition:linear;
+    }
+}
+```
+
+
+### Transition
+
+三次贝塞尔曲线具有强大的拟合能力。它能完美的拟合直线和抛物线，但不能拟合圆，可以分段拟合圆弧。
