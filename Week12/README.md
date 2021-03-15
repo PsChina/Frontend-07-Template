@@ -144,7 +144,7 @@ Block level
 Inline level
 
 1. display:inline-block
-1. display:inline-table
+1. display:inline-flex
 1. display:inline-table
 1. display:inline-grid
 ...
