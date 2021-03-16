@@ -305,9 +305,9 @@ V: Value 明度 （Brightness）
 
 ### 应用技巧
 
-1. data uri + svg
+- data uri + svg
 
-1. `data:image/svg+xml,<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+example: `data:image/svg+xml,<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="300" cy="150" rx="200" ry="80" style="fill:rgb(200,100,50);stroke:rgb(0,0,100);stroke-width:2"/>
 </svg>`
 
