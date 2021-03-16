@@ -286,6 +286,30 @@ S: Saturation 纯度
 V: Value 明度 （Brightness）
 
 
+## CSS 动画与绘制 ｜ 绘制
+
+几何图形
+
+1. border
+1. box-shadow
+1. border-radius
+
+文字
+
+1. font
+1. text-decoration
+
+位图
+
+1. background-image
+
+### 应用技巧
+
+1. data uri + svg
+
+1. `data:image/svg+xml,<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="300" cy="150" rx="200" ry="80" style="fill:rgb(200,100,50);stroke:rgb(0,0,100);stroke-width:2"/>
+</svg>`
 
 
 
