@@ -29,3 +29,27 @@ HTML的定义：XML 与 SGML
 `&gt` 大于号
 
 
+## 重学 HTML ｜ HTML 标签语义
+
+
+`em` 是表示重音词汇，且加粗。
+
+
+
+`strong` 是单纯的加粗并不改变语义结构。
+
+
+`figure` 图片文字组合
+
+
+`img` 图片
+
+
+`figcaption` 文字
+
+
+`hgruop` 配合 `h1-h6` 使用
+
+
+`code` 配合 `pre` 使用
+
