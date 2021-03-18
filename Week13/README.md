@@ -32,7 +32,8 @@ HTML的定义：XML 与 SGML
 ## 重学 HTML ｜ HTML 标签语义
 
 
-`main` 表示主题
+`main` 表示主体
+
 
 `em` 是表示重音词汇，且加粗。
 
