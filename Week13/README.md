@@ -35,6 +35,18 @@ HTML的定义：XML 与 SGML
 `main` 表示主体
 
 
+`p` 段落
+
+
+`nav` 导航栏
+
+
+`aside` 侧边栏
+
+
+`article` 文章 一般在主体内就是文章
+
+
 `em` 是表示重音词汇，且加粗。
 
 
@@ -55,3 +67,8 @@ HTML的定义：XML 与 SGML
 
 `code` 配合 `pre` 使用
 
+
+`dfn` 定义
+
+
+`samp` 示例、样本
