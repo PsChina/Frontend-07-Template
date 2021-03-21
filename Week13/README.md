@@ -149,7 +149,7 @@ addEventListener(type,listener,options|boolean)
 
 ## 浏览器API ｜ Range API
 
-
+
 ### Range API
 
 创建 Range 的方法
