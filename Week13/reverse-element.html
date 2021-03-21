@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="ul">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+<script>
+    const ul = document.getElementById('ul')
+    // 解法一 （得基础分）
+    // function reverseChildren(element) {
+    //     let l = element.childNodes.length // living collection
+    //     while (l-- > 0) {
+    //         element.appendChild(element.childNodes[l])
+    //     }
+    // }
+    // reverseChildren(ul)
+    // 解法二 （得满分）
+    function reverseChildren(element) {
+        const range = new Range()
+        range.selectNodeContents(element)
+        const fragment = range.extractContents()
+        const childNodes = fragment.childNodes
+        let l = childNodes.length
+        while (l-- > 0) {
+            fragment.appendChild(childNodes[l])
+        }
+        element.appendChild(fragment)
+    }
+    reverseChildren(ul)
+</script>
+
+</html>

@@ -147,5 +147,50 @@ addEventListener(type,listener,options|boolean)
 
 如果 capture 为 true 则会在捕获阶段执行，然后再冒泡。
 
+## 浏览器API ｜ Range API
+
+
+### Range API
+
+创建 Range 的方法
+```js
+// 1
+var range = new Range()
+range.setStart(element,9)
+range.setEnd(element,4)
+// 2
+var range = document.getSelection().getRangeAt(0)
+```
+便捷方法
+```js
+range.setStartBefore
+range.setEndBefore
+range.setStartAfter
+range.setEndAfter
+range.selectNode
+range.selectNodeContents
+```
+主要操作
+
+```js
+var fragment = range.extractContents() // 从 dom 树上把 range 选取的内容摘下来
+range.insertNode(document.createTextNode('aaaa')) // 在 range 的位置插入一个新节点
+```
+
+
+```js
+    function reverseChildren(element) {
+        const range = new Range()
+        range.selectNodeContents(element)
+        const fragment = range.extractContents()
+        const childNodes = fragment.childNodes
+        let l = childNodes.length
+        while (l-- > 0) {
+            fragment.appendChild(childNodes[l])
+        }
+        element.appendChild(fragment)
+    }
+    reverseChildren(ul)
+```
 
 
