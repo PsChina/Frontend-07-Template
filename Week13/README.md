@@ -93,3 +93,30 @@ HTML的定义：XML 与 SGML
 - `&lt;`
 - `&quot;`
 
+## 浏览器API ｜ DOM API
+
+![node](./node.png)
+
+### 导航类操作
+
+- parentNode  parentElement
+- childNodes children
+- firstChild firstElementChild
+- lastChild lastElementChild
+- nextSibling nextElementSibling
+- previousSibling previusElemeneSibling
+
+### 修改操作
+
+- appendChild
+- insertBefore
+- removeChild
+- replaceChild
+
+### 高级操作
+
+- compareDocumentPosition 是用于比较两个节点中关系的函数
+- cintains 检查一个节点是否包含另一个节点的函数
+- isEqualNode 检查两个节点是否完全相同
+- isSameNode 检查两个节点是否是同一个节点，实际上在 javaScript 中可以使用 `===`
+- cloneNode 复制一个节点，如果传入 true， 则会连同子元素做深拷贝。
