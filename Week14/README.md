@@ -161,3 +161,20 @@ input.getAttribute('value') // cute
 ### Lifecycle
 
 ![lifecycle](./lifecycle.png)
+
+
+### Children
+
+- Content 型 Children 与 Template 型 Children
+
+```html
+<my-button>
+    <img src="{{icon}}"/>{{title}}
+</my-button>
+
+<my-list>
+    <li>
+        <img src="{{icon}}"/>{{title}}
+    </li>
+</my-list>
+```
