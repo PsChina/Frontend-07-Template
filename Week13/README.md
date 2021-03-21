@@ -275,4 +275,4 @@ window
 - getClientRects() 获取所有生成的盒
 - getBoundingClientReact() 获取所有所有生成的盒包含的区域
 
-
+伪元素里面的文字无法复制
