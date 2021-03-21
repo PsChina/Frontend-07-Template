@@ -193,4 +193,41 @@ range.insertNode(document.createTextNode('aaaa')) // 在 range 的位置插入�
     reverseChildren(ul)
 ```
 
+## 浏览器 API ｜ CSSOM
+
+### document.styleSheets
+
+- doument.styleSheets
+- 案例
+
+
+### Rules
+
+- document.styleSheets[0].cssRules
+- document.styleSheets[0].insertRule("p {color:pink}", 0)
+- document.styleSheets[0].removeRule(0)
+
+Rule
+
+- CSSStyleRule
+- CSSCharsetRule
+- CSSImportRule
+- CSSMediaRule
+- CSSFontFaceRule
+- CSSPageRule
+- CSSKeyframesRule
+- CSSKeyframeRule
+- CSSSupportsRule
+- ......
+
+CSSStyleRule
+
+- selectorText String
+- style K-V 结构
+
+getComputedStyle
+
+- window.getComputedStyle(elt,pseudoElt);
+    - elt 想要获取的元素
+    - pseudoElt 可选，伪元素
 
