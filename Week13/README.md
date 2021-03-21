@@ -120,3 +120,32 @@ HTML的定义：XML 与 SGML
 - isEqualNode 检查两个节点是否完全相同
 - isSameNode 检查两个节点是否是同一个节点，实际上在 javaScript 中可以使用 `===`
 - cloneNode 复制一个节点，如果传入 true， 则会连同子元素做深拷贝。
+
+## 浏览器 API ｜ 事件 API
+
+addEventListener(type,listener,options|boolean)
+
+
+- type:事件名
+- listener:回调函数
+- capture:是否捕获/冒泡 
+- options:
+    - capture:是否捕获/冒泡 
+    - once:是否只响应一次
+    - passive:是否存在副作用，默认是false，onScroll 设置为 true 会提高性能，如需要阻止默认行为则需设置为false。
+
+### Event：冒泡与捕获
+
+浏览器的事件冒泡捕获机制是一定会发生的于是否添加回调函数无关。
+
+
+浏览器是一定会先发生捕获然后再进行冒泡
+
+
+第三个参数 capture 默认情况下是在捕获阶段不执行，冒泡阶段执行。
+
+
+如果 capture 为 true 则会在捕获阶段执行，然后再冒泡。
+
+
+
