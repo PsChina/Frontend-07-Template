@@ -72,3 +72,24 @@ HTML的定义：XML 与 SGML
 
 
 `samp` 示例、样本
+
+
+## 重学 HTML | HTML 语法
+
+### 合法元素
+
+- Element:`<tagname>...<tagename>`
+- Text: `text`
+- Commentt:`<!-- comments -->`
+- DocumentType: `<!Docutype html>`
+- ProcessingInstruction: `<?a 1?>`
+- CDATA:`<![CDATA[]]>`
+
+
+### 字符引用
+
+- `&#161;`
+- `&amp;`
+- `&lt;`
+- `&quot;`
+
