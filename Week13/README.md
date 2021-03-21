@@ -231,3 +231,48 @@ getComputedStyle
     - elt 想要获取的元素
     - pseudoElt 可选，伪元素
 
+## 浏览器 API ｜ CSSOM View
+
+### window 
+
+- window.innerHeight, window.innerWidth
+- window.outerWith, window.outerHeight
+- window.devicePixelRatio
+- window.screen
+    - window.screen.width
+    - window.screen.height
+    - window.screen.availWidth
+    - window.screen.availHeight
+
+### Window API
+
+- window.open("about:blank","_blank","width=100,height=100,left=100,right=100")
+- moveTo(x,y)
+- moveBy(x,y)
+- resizTo(x,y)
+- resizBy(x,y)
+
+
+### scroll
+
+只在 有滚动条的情况下生效
+
+- scrollTop
+- scrollLeft
+- scrollWidth
+- scroll(x,y)
+- scrollBy(x,y)
+- scrollIntoView()
+
+window
+- scrollX
+- scrollY
+- scroll(x,y)
+- scrollBy(x,y)
+
+### layout
+
+- getClientRects() 获取所有生成的盒
+- getBoundingClientReact() 获取所有所有生成的盒包含的区域
+
+
