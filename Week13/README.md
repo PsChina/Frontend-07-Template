@@ -276,3 +276,18 @@ window
 - getBoundingClientReact() 获取所有所有生成的盒包含的区域
 
 伪元素里面的文字无法复制
+
+## 浏览器 API ｜ 其他 API
+
+### 标准化组织 
+
+- khronos
+    - WebGL
+- ECMA
+    - ECMAScript
+- WHATWG
+    - HTML
+- W3C (主要标准产地)
+    - webaudio
+    - CG/WG
+
