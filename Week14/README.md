@@ -178,3 +178,169 @@ input.getAttribute('value') // cute
     </li>
 </my-list>
 ```
+
+## 组件的基本知识 ｜ 为组件添加 JSX 语法
+
+webpack.config.js
+```js
+module.exports = {
+    entry: './main.js',
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"],
+                        plugins: ["@babel/plugin-transform-react-jsx"]
+                    }
+                }
+            }
+        ]
+    },
+    mode: 'development'
+}
+```
+
+package.json
+```json
+{
+    //...
+    "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@babel/preset-env": "^7.13.10",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.27.2"
+    }
+    //...
+}
+```
+
+## 组件的基本知识 ｜ JSX 的基本使用方法
+
+`@babel/plugin-transform-react-jsx` 这个插件会把 `jsx` 转换成 `React.createElement()` 的调用
+
+它允许我们在 `webpack.config.js` 里面 修改函数名 
+```js
+{
+    //...
+    module:{
+   
+        rules: [
+            {
+                test: /\.js$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"],
+                        plugins: [["@babel/plugin-transform-react-jsx", { pragma: 'createElement' }]]
+                    }
+                }
+            }
+        ]
+        
+    }
+    //...
+}
+
+```
+
+这样一来就和 React 彻底没关系了 然后我们可以自己实现 `createElement` 函数
+
+
+```js
+function createElement(type, attributes, ...children) {
+    let element
+
+    if (typeof type === 'string') {
+        element = new ElementWrapper(type)
+    } else {
+        element = new type
+    }
+
+    for (let name in attributes) {
+        element.setAttribute(name, attributes[name])
+    }
+    for (let child of children) {
+        if (typeof child === 'string') {
+            child = new TextWrapper(child)
+        }
+        element.appendChild(child)
+    }
+    return element
+}
+
+class TextWrapper {
+    constructor(content) {
+        this.root = document.createTextNode(content)
+    }
+    setAttribute(name, value) {
+        this.root.setAttribute(name, value)
+    }
+    appendChild(child) {
+        //this.root.appendChild(child)
+        child.mountTo(this.root)
+    }
+    mountTo(parent) {
+        parent.appendChild(this.root)
+    }
+}
+
+class ElementWrapper {
+    constructor(type) {
+        this.root = document.createElement(type)
+    }
+    setAttribute(name, value) {
+        this.root.setAttribute(name, value)
+    }
+    appendChild(child) {
+        child.mountTo(this.root)
+    }
+    mountTo(parent) {
+        parent.appendChild(this.root)
+    }
+}
+```
+
+使用一下:
+
+```jsx
+class Div {
+    constructor() {
+        this.root = document.createElement('div')
+    }
+    setAttribute(name, value) {
+        this.root.setAttribute(name, value)
+    }
+    appendChild(child) {
+        child.mountTo(this.root)
+    }
+    mountTo(parent) {
+        parent.appendChild(this.root)
+    }
+}
+
+class Text {
+    constructor() {
+        return (
+            <span>Text</span>
+        )
+    }
+}
+
+for (let i of [1, 2, 3]) {
+    console.log(i)
+}
+
+let a = <Div id="a" >
+    HelloWorld
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <Text />
+</Div>
+
+a.mountTo(document.body)
+```
