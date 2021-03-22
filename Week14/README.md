@@ -206,7 +206,6 @@ module.exports = {
 package.json
 ```json
 {
-    //...
     "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/plugin-transform-react-jsx": "^7.12.17",
@@ -214,7 +213,6 @@ package.json
     "babel-loader": "^8.2.2",
     "webpack": "^5.27.2"
     }
-    //...
 }
 ```
 
