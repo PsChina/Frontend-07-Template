@@ -25,7 +25,7 @@ at-rule
 1. @media: https://www.w3.org/TR/css3-conditional/
 1. @page: https://www.w3.org/TR/css-page-3/
 1. @counter-style: https://www.w3.org/TR/css-counter-styles-3
-@keyframes: https://www.w3.org/TR/css-animations-1/
+1. @keyframes: https://www.w3.org/TR/css-animations-1/
 1. @fontface: https://www.w3.org/TR/css-fonts-3/
 1. @supports: https://www.w3.org/TR/css3-conditional/
 1. @namespace: https://www.w3.org/TR/css-namespaces-3/
