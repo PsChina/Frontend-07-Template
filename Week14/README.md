@@ -342,3 +342,12 @@ let a = <Div id="a" >
 
 a.mountTo(document.body)
 ```
+
+## 轮播组件 ｜ 轮播组件（一）
+
+
+`webpack-dev-server` 能自动编译代码 与之向匹配的 `webpack` 版本是
+
+`webpack-cli@3.3.12` 和 `webpack-dev-server@3.11.2`
+
+或者配置 `scripts` 启动 也可使用 `npx` 启动
