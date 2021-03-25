@@ -30,9 +30,17 @@ class Carousel extends Component {
         let startX = 0, children = this.root.children
         let move = event => {
             let x = event.clientX - startX
-            for (const child of children) {
-                child.style.transform = `translateX(${- position * 500 + x}px)`
+            let current = position - Math.round((x - x % 500) / 500)
+            for (const offset of [-1, 0, 1]) {
+                let pos = current + offset
+                pos += children.length
+                pos %= children.length
+
+                children[pos].style.transform = `translateX(${(offset - pos) * 500 + x % 500}px)`
             }
+            // for (const child of children) {
+            //     child.style.transform = `translateX(${- position * 500 + x}px)`
+            // }
         }
 
         let down = event => {
@@ -47,11 +55,15 @@ class Carousel extends Component {
         let up = event => {
             let x = event.clientX - startX
             position -= Math.round(x / 500)
-            for (const child of children) {
-                child.style.transition = ''
-                child.style.transform = `translateX(${- position * 500}px)`
+            position %= children.length
+            for (const offset of [0, - Math.sign(Math.round(x / 500) - x + 250 * Math.sign(x))]) {
+                let pos = position + offset
+                pos += children.length
+                pos %= children.length
+                // pos = (pos + children.length) % children.length
+                children[pos].style.transition = ''
+                children[pos].style.transform = `translateX(${(offset - pos) * 500}px)`
             }
-            console.log(position)
             this.root.removeEventListener('mousemove', move)
             this.root.removeEventListener('mouseup', up)
         }
