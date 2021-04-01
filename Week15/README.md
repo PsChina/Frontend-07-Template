@@ -17,6 +17,9 @@
 1. 移动端事件还需注意 `touchcancel` 以及多点触摸 `event.changedTouches` 是一个数组里面存了多个 point
 
 
+## 手势与动画 ｜ 实现手势的逻辑
+
+
 
 
 
