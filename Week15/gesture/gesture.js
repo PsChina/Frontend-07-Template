@@ -1,10 +1,10 @@
-let element = document.documentElement
+//let element = document.documentElement
 
 let isListenlingMouse = false
 
 let contexts = new Map();
 
-element.addEventListener('mousedown', event => {
+document.addEventListener('mousedown', event => {
 
     console.log(event.button)
     let context = Object.create(null)
@@ -42,20 +42,20 @@ element.addEventListener('mousedown', event => {
         end(event, context)
         contexts.delete('mouse' + (1 << event.button))
         if (event.buttons === 0) {
-            element.removeEventListener('mousemove', mousemove)
-            element.removeEventListener('mouseup', mouseup)
+            document.removeEventListener('mousemove', mousemove)
+            document.removeEventListener('mouseup', mouseup)
             isListenlingMouse = false
         }
     }
     if (!isListenlingMouse) {
-        element.addEventListener('mousemove', mousemove)
-        element.addEventListener('mouseup', mouseup)
+        document.addEventListener('mousemove', mousemove)
+        document.addEventListener('mouseup', mouseup)
         isListenlingMouse = true
     }
 })
 
 
-element.addEventListener('touchstart', event => {
+document.addEventListener('touchstart', event => {
     // event 有多个触点
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
@@ -67,7 +67,7 @@ element.addEventListener('touchstart', event => {
 })
 
 
-element.addEventListener('touchmove', event => {
+document.addEventListener('touchmove', event => {
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
@@ -77,7 +77,7 @@ element.addEventListener('touchmove', event => {
 })
 
 
-element.addEventListener('touchend', event => {
+document.addEventListener('touchend', event => {
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
@@ -87,7 +87,7 @@ element.addEventListener('touchend', event => {
     }
 })
 
-element.addEventListener('touchcancel', event => {
+document.addEventListener('touchcancel', event => {
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
         cancel(touch)
@@ -129,7 +129,7 @@ let move = (point, context) => {
         clearTimeout(context.handler)
     }
 
-    if (isPan) {
+    if (context.isPan) {
         console.log(dx, dy)
         console.log('pan')
     }
@@ -141,6 +141,7 @@ let move = (point, context) => {
 let end = (point, context) => {
     if (context.isTab) {
         console.log('tab')
+        dispatch('tab', {})
         clearTimeout(context.handler)
     }
     if (context.isPan) {
@@ -157,4 +158,12 @@ let end = (point, context) => {
 let cancel = (point, context) => {
     clearTimeout(context.handler)
     console.log('cancel', point.clientX, point.clientY)
+}
+
+function dispatch(type, properties) {
+    let event = new Event(type)
+    for (let name in properties) {
+        event[name] = properties[name]
+    }
+    document.dispatchEvent(event)
 }
