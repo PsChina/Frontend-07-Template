@@ -13,12 +13,17 @@
 </body>
 
 </html>
-<script src="./gesture.js"></script>
-<script>
-    document.addEventListener('tab', () => {
-        console.log('tap event trigger!')
+<!-- <script src="./gesture.js"></script> -->
+<script type="module">
+    import { enableGesture } from './gesture.js'
+    enableGesture(document.documentElement)
+    document.documentElement.addEventListener('tab', () => {
+        console.log('tab event trigger!')
     })
-    document.addEventListener('flick', () => {
+    document.documentElement.addEventListener('flick', () => {
         console.log('flick event trigger!')
+    })
+    document.documentElement.addEventListener('pressstart', () => {
+        console.log('pressstart event trigger!')
     })
 </script>
