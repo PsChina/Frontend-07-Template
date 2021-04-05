@@ -1,27 +1,68 @@
 let element = document.documentElement
 
+let isListenlingMouse = false
+
+let contexts = new Map();
+
 element.addEventListener('mousedown', event => {
-    start(event)
+
+    console.log(event.button)
+    let context = Object.create(null)
+
+    contexts.set('mouse' + (1 << event.button), context)
+
+    start(event, context)
     let mousemove = event => {
-        move(event)
-        console.log(event.clientX, event.clientY)
+        let button = 1
+
+        button << 1
+
+        while (button <= event.buttons) {
+            if (button & event.buttons) {
+                let key
+                if (button === 2) {
+                    key = 4
+                } else if (button === 4) {
+                    key = 2
+                } else {
+                    key = button
+                }
+                let context = contexts.get('mouse' + key)
+                move(event, context)
+            }
+            button = button << 1
+        }
+
+        // let context = contexts.get('mouse' + event.button)
+        // move(event, context)
+        // console.log(event.clientX, event.clientY)
     }
     let mouseup = event => {
-        end(event)
-        element.removeEventListener('mousemove', mousemove)
-        element.removeEventListener('mouseup', mouseup)
+        let context = contexts.get('mouse' + (1 << event.button))
+        end(event, context)
+        contexts.delete('mouse' + (1 << event.button))
+        if (event.buttons === 0) {
+            element.removeEventListener('mousemove', mousemove)
+            element.removeEventListener('mouseup', mouseup)
+            isListenlingMouse = false
+        }
     }
-    element.addEventListener('mousemove', mousemove)
-    element.addEventListener('mouseup', mouseup)
-
+    if (!isListenlingMouse) {
+        element.addEventListener('mousemove', mousemove)
+        element.addEventListener('mouseup', mouseup)
+        isListenlingMouse = true
+    }
 })
+
 
 element.addEventListener('touchstart', event => {
     // event 有多个触点
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
+        let context = Object.create(null)
+        contexts.set(touch.identifier, contexts)
         console.log(touch.clientX, touch.clientY)
-        start(touch)
+        start(touch, context)
     }
 })
 
@@ -30,7 +71,8 @@ element.addEventListener('touchmove', event => {
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
-        move(touch)
+        let context = contexts.get(touch.identifier)
+        move(touch, context)
     }
 })
 
@@ -39,7 +81,9 @@ element.addEventListener('touchend', event => {
     console.log(event.changedTouches)
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
-        end(touch)
+        let context = contexts.get(touch.identifier)
+        end(touch, context)
+        contexts.delete(touch.identifier)
     }
 })
 
@@ -47,6 +91,7 @@ element.addEventListener('touchcancel', event => {
     for (let touch of event.changedTouches) {
         console.log(touch.clientX, touch.clientY)
         cancel(touch)
+        contexts.delete(touch.identifier)
     }
 })
 
@@ -55,31 +100,33 @@ let handler, startX, startY,
     isTab = true,
     isPress = false
 
-let start = (point) => {
+let start = (point, context) => {
     //console.log('start', point.clientX, point.clientY)
-    startX = point.clientX
-    startY = point.clientY
-    isTab = true
-    isPan = false
-    isPress = false
-    handler = setTimeout(() => {
-        isTab = false
-        isPan = false
-        isPress = true
-        handler = null
+    context.startX = point.clientX
+    context.startY = point.clientY
+
+    context.isTab = true
+    context.isPan = false
+    context.isPress = false
+
+    context.handler = setTimeout(() => {
+        context.isTab = false
+        context.isPan = false
+        context.isPress = true
+        context.handler = null
         console.log('pressstart')
     }, 500)
 }
 
-let move = (point) => {
-    let dx = point.clientX - startX, dy = point.clientY - startY
+let move = (point, context) => {
+    let dx = point.clientX - context.startX, dy = point.clientY - context.startY
 
-    if (!isPan && dx ** 2 + dy ** 2 > 100) {
-        isTab = false
-        isPan = true
-        isPress = false
+    if (!context.isPan && dx ** 2 + dy ** 2 > 100) {
+        context.isTab = false
+        context.isPan = true
+        context.isPress = false
         console.log('panstart')
-        clearTimeout(handler)
+        clearTimeout(context.handler)
     }
 
     if (isPan) {
@@ -91,23 +138,23 @@ let move = (point) => {
 
 }
 
-let end = (point) => {
-    if (isTab) {
+let end = (point, context) => {
+    if (context.isTab) {
         console.log('tab')
-        clearTimeout(handler)
+        clearTimeout(context.handler)
     }
-    if (isPan) {
+    if (context.isPan) {
         // console.log(dx, dy)
         console.log('panend')
     }
-    if (isPress) {
+    if (context.isPress) {
         // console.log(dx, dy)
         console.log('pressend')
     }
     console.log('end', point.clientX, point.clientY)
 }
 
-let cancel = (point) => {
-    clearTimeout(handler)
+let cancel = (point, context) => {
+    clearTimeout(context.handler)
     console.log('cancel', point.clientX, point.clientY)
 }
