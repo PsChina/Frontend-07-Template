@@ -1,23 +1,29 @@
 
 import { Component, createElement } from './framework'
-import Carousel from './carousel'
+import Carousel from './Carousel'
+import { Button } from './Button'
+import { List } from './List'
 import { Timeline, Animation } from './animation'
 let d = [
     {
         img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhuafans.dbankcloud.com%2Fpic%2F2017%2F01%2F25%2F195116eebdd5aa2fdaebff832280a391_IMG_20170125_153017.jpg%3Fmode%3Ddownload&refer=http%3A%2F%2Fhuafans.dbankcloud.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619109392&t=452ee8a4458a6788fff25d482c221e37',
-        url: 'https://time.geekbang.org'
+        url: 'https://time.geekbang.org',
+        title: '蓝猫1'
     },
     {
         img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2Fo7sRcC0mxpsmAOUq6uednKU7w2ooOdJrjVb806Q%3DvHFxF1555158971979compressflag.jpg&refer=http%3A%2F%2Fdingyue.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619109421&t=342e9cc2065e9c33b3ff9ab490fb3f9d',
-        url: 'https://time.geekbang.org'
+        url: 'https://time.geekbang.org',
+        title: '蓝猫2'
     },
     {
         img: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2865065027,1553475875&fm=26&gp=0.jpg',
-        url: 'https://time.geekbang.org'
+        url: 'https://time.geekbang.org',
+        title: '蓝猫3'
     },
     {
         img: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3535222276,3943130922&fm=26&gp=0.jpg',
-        url: 'https://time.geekbang.org'
+        url: 'https://time.geekbang.org',
+        title: '蓝猫4'
     }
 ]
 
@@ -30,10 +36,26 @@ let a = <Carousel src={d}
     }}
 />
 
+let button = <Button>
+    content
+</Button>
+
+let list = <List data={d}>
+    {(record) =>
+        <div>
+            <img src={record.img} />
+            <a href={record.url}>{record.title}</a>
+        </div>
+    }
+</List>
 
 //document.body.appendChild(a)
 
 a.mountTo(document.body)
+
+button.mountTo(document.body)
+
+list.mountTo(document.body)
 
 let tl = new Timeline()
 
