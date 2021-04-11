@@ -19,21 +19,34 @@ export function createElement(type, attributes, ...children) {
     return element
 }
 
+export const STATE = Symbol('state')
+
+export const ATTRIBUTE = Symbol('attribute')
+
 export class Component {
     constructor() {
         // this.root = this.render()
+        this[ATTRIBUTE] = Object.create(null)
+        this[STATE] = Object.create(null)
     }
     render() {
         return document.createElement('div')
     }
     setAttribute(name, value) {
-        this.root.setAttribute(name, value)
+        //this.root.setAttribute(name, value)
+        this[ATTRIBUTE][name] = value
     }
     appendChild(child) {
         child.mountTo(this.root)
     }
     mountTo(parent) {
+        if (!this.root) {
+            this.render()
+        }
         parent.appendChild(this.root)
+    }
+    triggertEvent(type, args) {
+        this[ATTRIBUTE]['on' + type.replace(/^[\s\S]/, s => s.toUpperCase())](new CustomEvent(type, { detail: args }))
     }
 }
 
