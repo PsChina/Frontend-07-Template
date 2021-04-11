@@ -95,7 +95,6 @@ export class Animation {
         this.template = template || linear
     }
     receive(time) {
-        console.log('time=>', time)
         let range = (this.endValue - this.startValue)
         let progress = this.timingFunction(time / this.duration)
         this.object[this.property] = this.template(this.startValue + range * progress)

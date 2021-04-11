@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<!-- <script src="./gesture.js"></script> -->
+<script type="module">
+    import { enableGesture } from './gesture.js'
+    enableGesture(document.documentElement)
+    document.documentElement.addEventListener('tab', () => {
+        console.log('tab event trigger!')
+    })
+    document.documentElement.addEventListener('flick', () => {
+        console.log('flick event trigger!')
+    })
+    document.documentElement.addEventListener('pressstart', () => {
+        console.log('pressstart event trigger!')
+    })
+</script>
