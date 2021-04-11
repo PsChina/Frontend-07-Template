@@ -126,12 +126,12 @@ export class Recognizer {
             y: point.clientY
         }]
 
-        context.isTab = true
+        context.isTap = true
         context.isPan = false
         context.isPress = false
 
         context.handler = setTimeout(() => {
-            context.isTab = false
+            context.isTap = false
             context.isPan = false
             context.isPress = true
             context.handler = null
@@ -142,7 +142,7 @@ export class Recognizer {
         let dx = point.clientX - context.startX, dy = point.clientY - context.startY
 
         if (!context.isPan && dx ** 2 + dy ** 2 > 100) {
-            context.isTab = false
+            context.isTap = false
             context.isPan = true
             context.isPress = false
             context.isVertical = Math.abs(dx) < Math.abs(dy)
@@ -177,8 +177,8 @@ export class Recognizer {
         })
     }
     end(point, context) {
-        if (context.isTab) {
-            this.dispatcher.dispatch('tab', {})
+        if (context.isTap) {
+            this.dispatcher.dispatch('tap', {})
             clearTimeout(context.handler)
         }
 
