@@ -76,8 +76,25 @@ yo toolchain
         this.log('app name', answers.name)
         this.log('cool', answers.cool)
 ```
+1. `yeoman-generator` 支持 package.json 的新建:
 
+```js
+    initPackage() {
+        const pkgJson = {
+            devDependencies: {
+                eslint: '^3.15.0'
+            },
+            dependencies: {
+                react: '^16.2.0'
+            }
+        }
+        this.fs.extendJSON(this.destinationPath('package.json'), pkgJson)
+    }
+```
 
+1. `yeoman-generator` 支持 npm 的安装:
 
-
+```js
+ this.npmInstall()
+```
 
