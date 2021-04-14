@@ -50,3 +50,34 @@ link 完以后就可以用 yeoman 启动它了。
 ```bash
 yo toolchain
 ```
+
+
+## 初始化与构建 ｜ 初始化工具Yeoman（二）
+
+
+1. `yeoman-generator` 支持异步方法 `async function` 里面可以写  `await`
+1. `yeoman-generator` 文件模版系统：在 app 目录下新建 `templates` 文件夹
+1. `yeoman-generator` 支持用户输入
+
+```js
+        const answers = await this.prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Your project name',
+                default: this.appname
+            },
+            {
+                type: 'confirm',
+                name: 'cool',
+                message: 'Would you like to enable the Cool feature?'
+            }
+        ])
+        this.log('app name', answers.name)
+        this.log('cool', answers.cool)
+```
+
+
+
+
+
