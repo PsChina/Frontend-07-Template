@@ -98,3 +98,8 @@ yo toolchain
  this.npmInstall()
 ```
 
+## 初始化与构建 ｜ 初始化工具Yeoman（三）
+
+使用 Yeoman 创建一个 vue 项目 `./generator-vue`
+
+手动创建 vue 项目 并且用 Yeoman 代替
