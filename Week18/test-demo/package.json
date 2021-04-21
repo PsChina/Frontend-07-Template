@@ -1,0 +1,21 @@
+{
+  "name": "test-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "add.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.16",
+    "mocha": "^8.3.2"
+  },
+  "scripts": {
+    "test": "mocha --require @babel/register"
+  },
+  "author": "",
+  "license": "ISC"
+}
