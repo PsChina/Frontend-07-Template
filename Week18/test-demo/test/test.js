@@ -1,16 +1,3 @@
-学习笔记
-
-## 单元格测试工具 ｜ Mocha （一）
-
-全局安装 `mocha`
-
-```bash
-npm install --global mocha
-```
-
-
-test.js
-```js
 var assert = require('assert')
 var add = require('../add.js')
 
@@ -25,13 +12,3 @@ describe('add function testing', function () {
     })
 })
 
-```
-
-add.js
-```js
-function add(a, b) {
-    return a + b
-}
-
-module.exports = add
-```
