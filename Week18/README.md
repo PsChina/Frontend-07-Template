@@ -70,3 +70,58 @@ package.json
 }
 ```
 
+## 单元测试工具 | code coverage
+
+code coverage 代表我们的测试覆盖了源文件里面的哪些代码
+
+nyc 工具
+
+```bash
+npm i nyc -D
+```
+
+运行命令
+
+```bash
+nyc ./node_modules/.bin/mocha
+```
+
+适用标准语法需要：
+
+1. 添加 `.nycrc`
+    .nycrc
+    ```json
+    {
+        "extends":"@istanbuljs/nyc-config-babel"
+    }
+    ```
+
+1. 下载 `@istanbuljs/nyc-config-babel` 依赖
+
+    ```bash
+        npm i @istanbuljs/nyc-config-babel -D
+    ```
+
+1. 在 `.babel` 里面加上 `plugin:["istanbul"]`
+
+    ```bash
+    npm i babel-plugin-istanbul -D
+    ```
+
+
+1. 把命令加在 `package.json` 命令行内
+
+package.json
+ ```json
+{
+  "scripts": {
+    "coverage": "nyc mocha"
+  }
+}
+ ```
+
+
+写测试用例的时候运行 `npm run coverage`
+
+
+进行单元格测试的时候运行 `npm run test`
