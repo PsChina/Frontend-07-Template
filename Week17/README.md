@@ -103,3 +103,61 @@ yo toolchain
 使用 Yeoman 创建一个 vue 项目 `./generator-vue`
 
 手动创建 vue 项目 并且用 Yeoman 代替
+
+
+## 初始化与构建 ｜ Webpack基本知识
+
+`npx` 的介绍
+
+## 初始化与构建 ｜ Babel 基本知识
+
+__方式一__
+
+```bash
+npm i -g @babel/cli
+```
+
+```bash
+npm i @babel/core --save-dev
+```
+
+编译输出文件
+```bash
+babel ./babel/demo.js >1.txt
+```
+
+bable 配置
+
+.babelrc
+```json
+{
+    "presets":["@babel/preset-env"]
+}
+```
+
+```bash
+npm i --save-dev @babel/preset-env
+```
+
+__方式二__
+
+webpack.config.js
+```js
+module.exports = {
+    entry:"./main.js",
+    module:{
+        rules:[
+            {
+                test:/\.js/,
+                use:{
+                    loader:"babel-loader",
+                    options:{
+                        persets:["@babel/preset-env"],
+                        plugins:[/*...*/]
+                    }
+                }
+            }
+        ]
+    }
+}
+```
