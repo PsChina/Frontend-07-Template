@@ -1,0 +1,22 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parser.js",
+  "scripts": {
+    "test": "mocha --require @babel/register",
+    "coverage": "nyc mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.16",
+    "@istanbuljs/nyc-config-babel": "^3.0.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "css": "^3.0.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0"
+  }
+}

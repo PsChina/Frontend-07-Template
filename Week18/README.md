@@ -125,3 +125,21 @@ package.json
 
 
 进行单元格测试的时候运行 `npm run test`
+
+## 单元格测试工具 ｜ 对 html-parser 进行单元格测试
+
+```js
+var assert = require('assert')
+import { parserHTML } from '../src/parser.js'
+
+describe('parse html:', function () {
+    it('<a></a>', function () {
+        let tree = parserHTML('<a></a>')
+        assert.equal(tree.children[0].tagName, 'a')
+        assert.equal(tree.children[0].children.length, 0)
+    })
+})
+```
+
+
+
