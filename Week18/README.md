@@ -141,5 +141,9 @@ describe('parse html:', function () {
 })
 ```
 
+## 单元测试工具 ｜ 所有工具与 generator 的集成
+
+将 mocha 集成到 generator
+
 
 
