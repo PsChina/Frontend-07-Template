@@ -52,3 +52,35 @@ cd server/
 
 npm start
 ```
+
+### 编写简单的发送请求功能
+
+
+publish-server
+
+server.js
+```js
+let http = require('http')
+
+http.createServer(function (req, res) {
+    console.log(req)
+    res.end("hello world")
+}).listen(8082)
+```
+
+publish-tool
+
+publish.js
+```js
+let http = require('http')
+
+let request = http.request({
+    hostname: '127.0.0.1',
+    port: 8082
+}, response => {
+    console.log(response)
+})
+
+request.end()
+```
+
