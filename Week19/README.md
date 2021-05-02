@@ -140,3 +140,81 @@ file.on('end', chunk => {
 
 ```
 
+
+### 改造 server 
+
+publish-server
+
+server.js
+```js
+let http = require('http')
+let fs = require('fs')
+
+http.createServer(function (req, res) {
+    console.log(req.headers)
+    let outFile = fs.createWriteStream('../server/public/index.html')
+    req.on('data', chunk => {
+        outFile.write(chunk)
+    })
+    req.on('end', () => {
+        outFile.end()
+        res.end("success")
+    })
+
+}).listen(8082)
+```
+
+publish-tool
+
+./sample.html
+
+```html
+<html>
+
+<head>
+    <title>
+        Hello world!
+    </title>
+</head>
+
+<body>
+    <h1>Hello world!</h1>
+</body>
+
+</html>
+```
+
+publish-tool
+
+./publish.js
+
+```js
+let http = require('http')
+let fs = require('fs')
+
+
+let file = fs.createReadStream('./sample.html')
+
+let request = http.request({
+    hostname: '127.0.0.1',
+    port: 8082,
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/octet-stream'
+    }
+}, response => {
+    console.log(response)
+})
+
+file.on('data', chunk => {
+    console.log(chunk.toString());
+    request.write(chunk)
+})
+
+file.on('end', chunk => {
+    console.log('read finished')
+    request.end(chunk)
+})
+```
+
+
