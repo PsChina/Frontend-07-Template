@@ -5,10 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Open index.html",
-            "file": "/Users/panshanshan/Desktop/Learn/Frontend-07-Template/Week02/d5_A*/index.html"
+            "name": "Luanch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeArgs": [
+                "--require",
+                "@babel/register"
+            ],
+            "sourceMaps": true,
+            "args": [],
+            "program": "${workspaceFolder}/node_modules/.bin/mocha"
         }
     ]
 }

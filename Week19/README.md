@@ -217,4 +217,54 @@ file.on('end', chunk => {
 })
 ```
 
+### 实现多文件发布
+
+publish-tool
+
+`archiver` 这个包实现压缩文件
+
+./publish.js
+```js
+let http = require('http')
+let archiver = require('archiver')
+
+
+let request = http.request({
+    hostname: '127.0.0.1',
+    port: 8082,
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/octet-stream',
+    }
+}, response => {
+    console.log(response)
+})
+const archive = archiver('zip', {
+    zlib: { level: 9 }
+})
+
+archive.directory('./sample/', false)
+
+archive.finalize()
+
+archive.pipe(request)
+
+```
+
+
+publish-server
+
+`unzipper` 这个包实现解压文件
+
+./server.js
+```js
+let http = require('http')
+let unzipper = require('unzipper')
+
+http.createServer(function (req, res) {
+    console.log(req.headers)
+    req.pipe(unzipper.Extract({ path: '../server/public/' }))
+}).listen(8082)
+```
+
 
