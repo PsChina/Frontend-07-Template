@@ -63,7 +63,6 @@ server.js
 let http = require('http')
 
 http.createServer(function (req, res) {
-    console.log(req)
     res.end("hello world")
 }).listen(8082)
 ```
@@ -266,5 +265,13 @@ http.createServer(function (req, res) {
     req.pipe(unzipper.Extract({ path: '../server/public/' }))
 }).listen(8082)
 ```
+
+
+### 用 GitHub oAuth 做一个登陆实例
+
+文档:
+
+https://docs.github.com/en/developers/apps/authorizing-oauth-apps
+
 
 
