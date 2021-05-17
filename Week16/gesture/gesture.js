@@ -21,89 +21,101 @@ export class Dispatch {
 
 export class Listener {
     constructor(element, recognizer) {
-        let isListenlingMouse = false
+        this.isListenlingMouse = false
+        this.recognizer = recognizer
+        this.contexts = new Map();
+        element.addEventListener('mousedown', this.mousedown)
 
-        let contexts = new Map();
-        element.addEventListener('mousedown', event => {
+        element.addEventListener('touchstart', this.touchstart)
 
-            let context = Object.create(null)
+        element.addEventListener('touchmove', this.touchmove)
 
-            contexts.set('mouse' + (1 << event.button), context)
+        element.addEventListener('touchend', this.touchend)
 
-            recognizer.start(event, context)
-            let mousemove = event => {
-                let button = 1
+        element.addEventListener('touchcancel', this.touchcancel)
 
-                button << 1
+    }
+    mousedown(event) {
+        let context = Object.create(null)
+        this.contexts.set('mouse' + (1 << event.button), context)
+        this.recognizer.start(event, context)
+        let mousemove = event => {
+            let button = 1
 
-                while (button <= event.buttons) {
-                    if (button & event.buttons) {
-                        let key
-                        if (button === 2) {
-                            key = 4
-                        } else if (button === 4) {
-                            key = 2
-                        } else {
-                            key = button
-                        }
-                        let context = contexts.get('mouse' + key)
-                        recognizer.move(event, context)
+            button << 1
+
+            while (button <= event.buttons) {
+                if (button & event.buttons) {
+                    let key
+                    if (button === 2) {
+                        key = 4
+                    } else if (button === 4) {
+                        key = 2
+                    } else {
+                        key = button
                     }
-                    button = button << 1
+                    let context = this.contexts.get('mouse' + key)
+                    this.recognizer.move(event, context)
                 }
-
+                button = button << 1
             }
-            let mouseup = event => {
-                let context = contexts.get('mouse' + (1 << event.button))
-                recognizer.end(event, context)
-                contexts.delete('mouse' + (1 << event.button))
-                if (event.buttons === 0) {
-                    element.removeEventListener('mousemove', mousemove)
-                    element.removeEventListener('mouseup', mouseup)
-                    isListenlingMouse = false
-                }
+
+        }
+        let mouseup = event => {
+            let context = this.contexts.get('mouse' + (1 << event.button))
+            this.recognizer.end(event, context)
+            this.contexts.delete('mouse' + (1 << event.button))
+            if (event.buttons === 0) {
+                element.removeEventListener('mousemove', mousemove)
+                element.removeEventListener('mouseup', mouseup)
+                this.isListenlingMouse = false
             }
-            if (!isListenlingMouse) {
-                element.addEventListener('mousemove', mousemove)
-                element.addEventListener('mouseup', mouseup)
-                isListenlingMouse = true
-            }
-        })
+        }
+        if (!this.isListenlingMouse) {
+            element.addEventListener('mousemove', mousemove)
+            element.addEventListener('mouseup', mouseup)
+            this.isListenlingMouse = true
+        }
+    }
+    touchstart(event) {
+        // event 有多个触点
+        for (let touch of event.changedTouches) {
+            context = Object.create(null)
+            this.contexts.set(touch.identifier, context)
+            this.recognizer.start(touch, context)
+        }
+    }
+    touchmove(event) {
+        for (let touch of event.changedTouches) {
+            let context = this.contexts.get(touch.identifier)
+            this.recognizer.move(touch, context)
+        }
+    }
+    touchend(event) {
+        for (let touch of event.changedTouches) {
+            let context = this.contexts.get(touch.identifier)
+            this.recognizer.end(touch, context)
+            this.contexts.delete(touch.identifier)
+        }
+    }
+    touchcancel(event) {
+        for (let touch of event.changedTouches) {
+            this.recognizer.cancel(touch)
+            this.contexts.delete(touch.identifier)
+        }
+    }
+    removeEventListener(element) {
+        if (element instanceof HTMLElement) {
+            element.removeEventListener('mousedown', this.mousedown)
 
+            element.removeEventListener('touchstart', this.touchstart)
 
-        element.addEventListener('touchstart', event => {
-            // event 有多个触点
-            for (let touch of event.changedTouches) {
-                let context = Object.create(null)
-                contexts.set(touch.identifier, context)
-                recognizer.start(touch, context)
-            }
-        })
+            element.removeEventListener('touchmove', this.touchmove)
 
+            element.removeEventListener('touchend', this.touchend)
 
-        element.addEventListener('touchmove', event => {
-            for (let touch of event.changedTouches) {
-                let context = contexts.get(touch.identifier)
-                recognizer.move(touch, context)
-            }
-        })
-
-
-        element.addEventListener('touchend', event => {
-            for (let touch of event.changedTouches) {
-                let context = contexts.get(touch.identifier)
-                recognizer.end(touch, context)
-                contexts.delete(touch.identifier)
-            }
-        })
-
-        element.addEventListener('touchcancel', event => {
-            for (let touch of event.changedTouches) {
-                recognizer.cancel(touch)
-                contexts.delete(touch.identifier)
-            }
-        })
-
+            element.removeEventListener('touchcancel', this.touchcancel)
+        }
     }
 }
 
@@ -241,7 +253,14 @@ export class Recognizer {
 
 }
 
+let listener
+
+export function disableGesture(element) {
+    listener.removeEventListener(element)
+    listener = undefined
+}
+
 export function enableGesture(element) {
-    new Listener(element, new Recognizer(new Dispatch(element)))
+    listener = new Listener(element, new Recognizer(new Dispatch(element)))
 }
 
